@@ -135,7 +135,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                   </div>
 
                   <div className="pt-2 flex justify-end">
-                    <ContactButton label={submitting ? "SENDING..." : "SEND MESSAGE"} />
+                    <ContactButton type="submit" label={submitting ? "SENDING..." : "SEND MESSAGE"} />
                   </div>
                 </form>
               </>

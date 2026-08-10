@@ -4,17 +4,19 @@ interface ContactButtonProps {
   label?: string;
   onClick?: () => void;
   className?: string;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 export const ContactButton: React.FC<ContactButtonProps> = ({
   label = "Contact Me",
   onClick,
   className = "",
+  type = "button",
 }) => {
   return (
     <button
       onClick={onClick}
-      type="button"
+      type={type}
       className={`relative inline-flex items-center justify-center rounded-full font-medium uppercase tracking-widest text-white transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer px-8 py-3 sm:px-10 sm:py-3.5 md:px-12 md:py-4 text-xs sm:text-sm md:text-base select-none ${className}`}
       style={{
         background: 'linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)',
