@@ -33,152 +33,110 @@ export const CyberTunnel3D: React.FC = () => {
       color: 0xb600a8,
       wireframe: true,
       transparent: true,
-      opacity: 0.16,
+      opacity: 0.15,
       side: THREE.BackSide
     });
     const tunnel = new THREE.Mesh(tunnelGeo, tunnelMat);
     tunnel.rotation.x = Math.PI / 2;
     scene.add(tunnel);
 
-    // Group for 3D Domain Solutons (Web Dev, Cybersecurity, AI)
-    const domainGroup = new THREE.Group();
-    scene.add(domainGroup);
+    // Group for 3D Holographic Domain Badges
+    const badgeGroup = new THREE.Group();
+    scene.add(badgeGroup);
 
-    // Shared Materials
-    const cyanMat = new THREE.MeshBasicMaterial({
-      color: 0x00e1ff,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.45
-    });
+    // Helper: Create High-Res 2D Canvas Texture for 3D Holographic Badges
+    const createDomainBadgeTexture = (symbol: string, text: string, strokeColor: string, textColor: string) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 256;
+      const ctx = canvas.getContext('2d');
 
-    const magentaMat = new THREE.MeshBasicMaterial({
-      color: 0xb600a8,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.45
-    });
+      if (ctx) {
+        // Dark Glass Background
+        ctx.fillStyle = 'rgba(15, 16, 20, 0.85)';
+        ctx.beginPath();
+        ctx.roundRect(10, 10, 492, 236, 24);
+        ctx.fill();
 
-    const whiteMat = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
-      transparent: true,
-      opacity: 0.7
-    });
+        // Neon Glow Border
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 8;
+        ctx.shadowColor = strokeColor;
+        ctx.shadowBlur = 20;
+        ctx.stroke();
 
-    // Helper 1: React Atom Mesh (Web Dev)
-    const createReactAtomMesh = (color: number) => {
-      const atomGroup = new THREE.Group();
-      const mat = new THREE.MeshBasicMaterial({
-        color,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.5
-      });
+        // Inner Light Highlight
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+        ctx.lineWidth = 2;
+        ctx.stroke();
 
-      // Nucleus
-      const nucGeo = new THREE.SphereGeometry(3.5, 12, 12);
-      const nucleus = new THREE.Mesh(nucGeo, whiteMat);
-      atomGroup.add(nucleus);
+        // Symbol Text (Big Icon/Code)
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = textColor;
+        ctx.font = 'bold 72px "Kanit", "Courier New", sans-serif';
+        ctx.fillStyle = textColor;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(symbol, 256, 100);
 
-      // 3 Electron Orbit Rings
-      const ringGeo = new THREE.TorusGeometry(12, 0.4, 8, 32);
-      
-      const r1 = new THREE.Mesh(ringGeo, mat);
-      r1.rotation.x = Math.PI / 3;
-      atomGroup.add(r1);
-
-      const r2 = new THREE.Mesh(ringGeo, mat);
-      r2.rotation.x = -Math.PI / 3;
-      atomGroup.add(r2);
-
-      const r3 = new THREE.Mesh(ringGeo, mat);
-      r3.rotation.y = Math.PI / 2;
-      atomGroup.add(r3);
-
-      return atomGroup;
-    };
-
-    // Helper 2: Security Shield & Lock Mesh (Cybersecurity)
-    const createShieldMesh = (color: number) => {
-      const shieldGroup = new THREE.Group();
-      const mat = new THREE.MeshBasicMaterial({
-        color,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.5
-      });
-
-      // Outer Shield Prism (Octahedron slightly scaled)
-      const prismGeo = new THREE.OctahedronGeometry(13, 0);
-      prismGeo.scale(1, 1.4, 0.8);
-      const prism = new THREE.Mesh(prismGeo, mat);
-      shieldGroup.add(prism);
-
-      // Inner Glowing Lock Core
-      const coreGeo = new THREE.BoxGeometry(4, 5, 4);
-      const core = new THREE.Mesh(coreGeo, whiteMat);
-      shieldGroup.add(core);
-
-      return shieldGroup;
-    };
-
-    // Helper 3: AI Neural Core Mesh (Artificial Intelligence)
-    const createAiNeuralMesh = (color: number) => {
-      const aiGroup = new THREE.Group();
-      const mat = new THREE.MeshBasicMaterial({
-        color,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.5
-      });
-
-      // Core Icosahedron
-      const icoGeo = new THREE.IcosahedronGeometry(10, 1);
-      const ico = new THREE.Mesh(icoGeo, mat);
-      aiGroup.add(ico);
-
-      // Orbiting Satellite Neural Nodes
-      const nodeGeo = new THREE.SphereGeometry(1.5, 8, 8);
-      for (let i = 0; i < 6; i++) {
-        const node = new THREE.Mesh(nodeGeo, whiteMat);
-        const angle = (i / 6) * Math.PI * 2;
-        node.position.set(Math.cos(angle) * 16, Math.sin(angle) * 16, (i % 2 === 0 ? 5 : -5));
-        aiGroup.add(node);
+        // Domain Name Text
+        ctx.font = 'bold 36px font-mono, "Kanit", monospace';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText(text, 256, 180);
       }
 
-      return aiGroup;
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.minFilter = THREE.LinearFilter;
+      return texture;
     };
 
-    // Spawn 15 Floating Domain Objects into the Tunnel
-    const floatingObjects: THREE.Group[] = [];
+    // Domain Badges Definition List (Web Dev, Cybersecurity, AI)
+    const badgeDefs = [
+      // Web Dev
+      { symbol: '</>', text: 'WEB DEV', stroke: '#00E1FF', textCol: '#00E1FF' },
+      { symbol: '⚛ REACT', text: 'FRONTEND', stroke: '#00E1FF', textCol: '#00E1FF' },
+      { symbol: 'JS NODE', text: 'FULL STACK', stroke: '#00E1FF', textCol: '#00E1FF' },
 
-    for (let i = 0; i < 15; i++) {
-      let object3D: THREE.Group;
-      const type = i % 3; // 0: Web Dev (React), 1: Cybersecurity (Shield), 2: AI (Neural)
-      const col = i % 2 === 0 ? 0x00e1ff : 0xb600a8;
+      // Cybersecurity
+      { symbol: '🛡 SEC', text: 'CYBERSECURITY', stroke: '#B600A8', textCol: '#B600A8' },
+      { symbol: '🔒 LOCK', text: 'SOC OPERATIVE', stroke: '#B600A8', textCol: '#B600A8' },
+      { symbol: '🔑 NMAP', text: 'SECURITY AUDIT', stroke: '#B600A8', textCol: '#B600A8' },
 
-      if (type === 0) {
-        object3D = createReactAtomMesh(col);
-      } else if (type === 1) {
-        object3D = createShieldMesh(col);
-      } else {
-        object3D = createAiNeuralMesh(col);
-      }
+      // AI
+      { symbol: '🧠 AI', text: 'AI SYSTEM', stroke: '#00E1FF', textCol: '#00E1FF' },
+      { symbol: '⚡ PYTHON', text: 'DATA & AI', stroke: '#B600A8', textCol: '#B600A8' },
+      { symbol: '📜 CISCO', text: 'CERTIFIED', stroke: '#00E1FF', textCol: '#00E1FF' }
+    ];
 
-      object3D.position.set(
+    const badges: THREE.Mesh[] = [];
+
+    // Spawn 16 Floating 3D Holographic Badges in the Tunnel
+    for (let i = 0; i < 16; i++) {
+      const def = badgeDefs[i % badgeDefs.length];
+      const texture = createDomainBadgeTexture(def.symbol, def.text, def.stroke, def.textCol);
+
+      const boxGeo = new THREE.BoxGeometry(22, 11, 1.2);
+      const matFront = new THREE.MeshBasicMaterial({ map: texture, transparent: true, opacity: 0.9 });
+      const matSide = new THREE.MeshBasicMaterial({ color: def.stroke === '#00E1FF' ? 0x00e1ff : 0xb600a8, wireframe: true, transparent: true, opacity: 0.4 });
+
+      // Apply materials array to BoxGeometry
+      const materials = [matSide, matSide, matSide, matSide, matFront, matFront];
+      const badgeMesh = new THREE.Mesh(boxGeo, materials);
+
+      badgeMesh.position.set(
         (Math.random() - 0.5) * 170,
         (Math.random() - 0.5) * 120,
         (Math.random() - 0.5) * 260
       );
 
-      object3D.rotation.set(
-        Math.random() * Math.PI,
-        Math.random() * Math.PI,
-        Math.random() * Math.PI
+      badgeMesh.rotation.set(
+        (Math.random() - 0.5) * 0.4,
+        (Math.random() - 0.5) * 0.8,
+        (Math.random() - 0.5) * 0.3
       );
 
-      domainGroup.add(object3D);
-      floatingObjects.push(object3D);
+      badgeGroup.add(badgeMesh);
+      badges.push(badgeMesh);
     }
 
     // Mouse Tracking
@@ -216,11 +174,10 @@ export const CyberTunnel3D: React.FC = () => {
       // Endless Tunnel Motion towards camera
       tunnel.position.z = (elapsedTime * 40) % 50;
 
-      // Rotate floating 3D Web Dev, Cybersecurity, & AI objects
-      floatingObjects.forEach((obj, idx) => {
-        obj.rotation.x += 0.006 * (idx % 3 + 1);
-        obj.rotation.y += 0.008 * (idx % 2 + 1);
-        obj.rotation.z += 0.004;
+      // Rotate floating 3D Domain Badges smoothly
+      badges.forEach((b, idx) => {
+        b.rotation.y = Math.sin(elapsedTime * 0.5 + idx) * 0.3;
+        b.rotation.x = Math.cos(elapsedTime * 0.4 + idx) * 0.15;
       });
 
       // Smooth mouse camera steering
@@ -244,9 +201,17 @@ export const CyberTunnel3D: React.FC = () => {
       }
       tunnelGeo.dispose();
       tunnelMat.dispose();
-      cyanMat.dispose();
-      magentaMat.dispose();
-      whiteMat.dispose();
+      badgeGroup.traverse((obj) => {
+        if (obj instanceof THREE.Mesh) {
+          obj.geometry.dispose();
+          if (Array.isArray(obj.material)) {
+            obj.material.forEach((m) => {
+              if (m.map) m.map.dispose();
+              m.dispose();
+            });
+          }
+        }
+      });
       renderer.dispose();
     };
   }, []);
@@ -254,7 +219,7 @@ export const CyberTunnel3D: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-85"
+      className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-90"
       style={{ mixBlendMode: 'screen' }}
     />
   );
