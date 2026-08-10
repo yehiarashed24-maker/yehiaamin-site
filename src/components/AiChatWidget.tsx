@@ -71,10 +71,18 @@ export const AiChatWidget: React.FC = () => {
           })),
       ];
 
-      // Call our secure backend instead of OpenRouter directly!
-      const response = await fetch('/api/chat', {
+      const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY;
+      if (!apiKey) {
+        throw new Error('API key is missing! Please check your .env file or Vercel settings.');
+      }
+
+      // Call OpenRouter directly from frontend
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'HTTP-Referer': window.location.origin || 'https://yehiaamin-site.vercel.app',
+          'X-Title': 'Yehia Amin Portfolio AI Assistant',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
