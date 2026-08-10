@@ -65,7 +65,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 30 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="relative w-full max-w-2xl bg-[#0a0a0a] border border-[#333] rounded-xl shadow-[0_0_50px_rgba(0,255,136,0.1)] text-[#D7E2EA] z-10 overflow-hidden"
+            className="relative w-full max-w-2xl bg-[#0a0a0a] border border-[#333] rounded-xl shadow-[0_0_50px_rgba(182,0,168,0.15)] text-[#D7E2EA] z-10 overflow-hidden"
           >
             {/* Terminal Top Bar */}
             <div className="bg-[#1a1a1a] border-b border-[#333] px-4 py-3 flex items-center justify-between select-none">
@@ -88,7 +88,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                   animate={{ opacity: 1 }}
                   className="py-12 flex flex-col items-start space-y-4"
                 >
-                  <p className="text-emerald-400 font-bold flex gap-3 items-center text-lg">
+                  <p className="text-purple-400 font-bold flex gap-3 items-center text-lg">
                     <CheckCircle2 size={24} className="animate-pulse" />
                     [SUCCESS] TRANSMISSION_COMPLETE
                   </p>
@@ -100,15 +100,15 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                   <p className="text-white mt-4">
                     Thank you for reaching out! I'll review your message and get back to you securely.
                   </p>
-                  <p className="text-emerald-400 mt-8">
+                  <p className="text-purple-400 mt-8">
                     {`guest@yehia-amin:~$ `}
-                    <span className={`inline-block w-2.5 h-4 bg-emerald-400 ${cursorBlink ? 'opacity-100' : 'opacity-0'}`} />
+                    <span className={`inline-block w-2.5 h-4 bg-purple-400 ${cursorBlink ? 'opacity-100' : 'opacity-0'}`} />
                   </p>
                 </motion.div>
               ) : (
                 <div className="relative z-10">
                   <div className="mb-8">
-                    <h2 className="text-xl font-bold text-emerald-400 mb-2 flex items-center gap-2">
+                    <h2 className="text-xl font-bold text-purple-400 mb-2 flex items-center gap-2">
                       <SquareTerminal size={20} />
                       INITIATE_SECURE_CONNECTION
                     </h2>
@@ -119,11 +119,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="group">
-                      <label className="block text-emerald-500 text-sm mb-2 flex items-center gap-2">
+                      <label className="block text-purple-400 text-sm mb-2 flex items-center gap-2">
                         {`> input_name`} <span className="text-gray-600">--required</span>
                       </label>
-                      <div className="flex items-center bg-[#111] border border-[#222] focus-within:border-emerald-500/50 rounded-lg overflow-hidden transition-colors px-4 py-3">
-                        <span className="text-emerald-500 mr-3 select-none">$</span>
+                      <div className="flex items-center bg-[#111] border border-[#222] focus-within:border-purple-500/50 rounded-lg overflow-hidden transition-colors px-4 py-3">
+                        <span className="text-purple-500 mr-3 select-none">$</span>
                         <input
                           type="text"
                           required
@@ -136,11 +136,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                     </div>
 
                     <div className="group">
-                      <label className="block text-emerald-500 text-sm mb-2 flex items-center gap-2">
+                      <label className="block text-purple-400 text-sm mb-2 flex items-center gap-2">
                         {`> input_contact`} <span className="text-gray-600">--email</span>
                       </label>
-                      <div className="flex items-center bg-[#111] border border-[#222] focus-within:border-emerald-500/50 rounded-lg overflow-hidden transition-colors px-4 py-3">
-                        <span className="text-emerald-500 mr-3 select-none">$</span>
+                      <div className="flex items-center bg-[#111] border border-[#222] focus-within:border-purple-500/50 rounded-lg overflow-hidden transition-colors px-4 py-3">
+                        <span className="text-purple-500 mr-3 select-none">$</span>
                         <input
                           type="email"
                           required
@@ -153,11 +153,11 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                     </div>
 
                     <div className="group">
-                      <label className="block text-emerald-500 text-sm mb-2 flex items-center gap-2">
+                      <label className="block text-purple-400 text-sm mb-2 flex items-center gap-2">
                         {`> write_message`} <span className="text-gray-600">--payload</span>
                       </label>
-                      <div className="flex items-start bg-[#111] border border-[#222] focus-within:border-emerald-500/50 rounded-lg overflow-hidden transition-colors px-4 py-3">
-                        <span className="text-emerald-500 mr-3 mt-0.5 select-none">{`>`}</span>
+                      <div className="flex items-start bg-[#111] border border-[#222] focus-within:border-purple-500/50 rounded-lg overflow-hidden transition-colors px-4 py-3">
+                        <span className="text-purple-500 mr-3 mt-0.5 select-none">{`>`}</span>
                         <textarea
                           rows={4}
                           required
@@ -171,18 +171,18 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
                     <div className="pt-6 border-t border-[#222] flex items-center justify-between">
                       <p className="text-xs text-gray-600 hidden sm:block">
-                        Status: <span className="text-emerald-500">Ready to transmit</span>
+                        Status: <span className="text-purple-400">Ready to transmit</span>
                       </p>
                       <button
                         type="submit"
                         disabled={submitting}
-                        className="relative overflow-hidden group bg-emerald-500/10 border border-emerald-500 text-emerald-400 font-bold px-8 py-3 rounded hover:bg-emerald-500 hover:text-black transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="relative overflow-hidden group bg-purple-500/10 border border-purple-500 text-purple-400 font-bold px-8 py-3 rounded hover:bg-purple-600 hover:border-purple-600 hover:text-white transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         <span className="relative z-10 flex items-center gap-2">
                           {submitting ? "[ TRANSMITTING... ]" : "[ EXECUTE ]"}
                         </span>
                         {/* Terminal scanning line effect on hover */}
-                        <div className="absolute top-0 left-0 w-full h-[2px] bg-emerald-300 opacity-0 group-hover:opacity-50 group-hover:animate-pulse" />
+                        <div className="absolute top-0 left-0 w-full h-[2px] bg-purple-300 opacity-0 group-hover:opacity-50 group-hover:animate-pulse" />
                       </button>
                     </div>
                   </form>
