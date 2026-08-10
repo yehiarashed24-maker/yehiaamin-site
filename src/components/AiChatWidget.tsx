@@ -202,7 +202,7 @@ export const AiChatWidget: React.FC = () => {
             </div>
 
             {/* Quick Suggestions */}
-            <div className="px-3 py-2 bg-[#0a0a0c]/80 border-t border-[#B600A8]/30 flex gap-1.5 overflow-x-auto text-[11px] flex-shrink-0">
+            <div className="px-3 py-2 bg-[#0a0a0c]/80 border-t border-[#B600A8]/30 flex gap-1.5 overflow-x-auto scrollbar-hide text-[11px] flex-shrink-0">
               {quickQuestions.map((q, idx) => (
                 <button
                   key={idx}
