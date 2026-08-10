@@ -78,7 +78,7 @@ export const AiChatWidget: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'openrouter/auto', // Requesting the best free model
+          model: 'openrouter/free', // Force free model
           messages: apiMessages,
         }),
       });

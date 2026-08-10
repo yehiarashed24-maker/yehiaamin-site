@@ -4,7 +4,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { messages, model = 'openrouter/auto' } = req.body;
+    const { messages, model = 'openrouter/free' } = req.body;
     
     // The key is safely stored in Vercel Environment Variables, totally hidden from frontend!
     const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || process.env.VITE_OPENROUTER_API_KEY;
