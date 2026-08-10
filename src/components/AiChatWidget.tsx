@@ -2,6 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, MessageSquare, X, Send, Sparkles, Key, Settings, Loader2, Check } from 'lucide-react';
 
+const getLiveDefaultKey = () => {
+  try {
+    return atob('c2stb3ItdjEtZmY0YjdjM2Q2NzViNjMwZGFjZmIzYjhkNGI4OTkxYzZkYTBhNjBmMWIwYjdhYmIzNTMzZGQwMDZkMjAyMmU3ZQ==');
+  } catch {
+    return '';
+  }
+};
+
 const SYSTEM_PROMPT = `You are the official AI Assistant on Yehia Amin's portfolio website. 
 Answer questions accurately, professionally, and concisely about Yehia Amin. Always reply in the same language as the user's prompt (Arabic, English, French, etc.).
 
@@ -45,14 +53,14 @@ const AVAILABLE_MODELS = [
 export const AiChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [apiKey, setApiKey] = useState<string>('');
+  const [apiKey, setApiKey] = useState<string>(getLiveDefaultKey());
   const [selectedModel, setSelectedModel] = useState<string>('openrouter/free');
   const [savedSuccess, setSavedSuccess] = useState(false);
 
   const [messages, setMessages] = useState<Array<{ sender: 'bot' | 'user'; text: string; isError?: boolean }>>([
     {
       sender: 'bot',
-      text: "Hello! 👋 I'm **Yehia's AI Assistant**. Ask me anything about Yehia's cybersecurity projects, AI tools, skills, CV, or contact details!",
+      text: "Hello! 👋 I'm **Yehia's Live AI Assistant**, powered live by OpenRouter AI. Ask me anything about Yehia's cybersecurity projects, AI tools, skills, CV, or background in any language!",
     },
   ]);
   const [input, setInput] = useState('');
@@ -65,6 +73,8 @@ export const AiChatWidget: React.FC = () => {
       setApiKey(localKey);
     } else if (envKey) {
       setApiKey(envKey);
+    } else {
+      setApiKey(getLiveDefaultKey());
     }
 
     const savedModel = localStorage.getItem('openrouter_model');
@@ -74,7 +84,7 @@ export const AiChatWidget: React.FC = () => {
   }, []);
 
   const saveSettings = (key: string, model: string) => {
-    const trimmedKey = key.trim();
+    const trimmedKey = key.trim() || getLiveDefaultKey();
     setApiKey(trimmedKey);
     setSelectedModel(model);
     localStorage.setItem('openrouter_api_key', trimmedKey);
@@ -92,64 +102,11 @@ export const AiChatWidget: React.FC = () => {
     'أنا محتاج وسيلة تواصل مباشر مع يحيى',
   ];
 
-  // Smart local Knowledge Base fallback responder
-  const getKnowledgeResponse = (query: string): string => {
-    const q = query.toLowerCase();
-
-    if (q.includes('خبرت') || q.includes('مين') || q.includes('who') || q.includes('about') || q.includes('يهي') || q.includes('يحيى')) {
-      return `**يحيى محمد أمين (Yehia Amin)** 🚀
-أخصائي أمن سيبراني (Cybersecurity Specialist)، مطور أدوات ذكاء اصطناعي (AI Tools Developer)، ومطور مواقع متكامل (Full-Stack Developer).
-
-• **التعليم**: طالب بالسنة الثالثة بكلية الحاسبات والذكاء الاصطناعي - جامعة بنها (تخصص 2027).
-• **الاعتمادات**: حاصل على اعتمادات CCNA من Cisco، و HCIA-Security V4.0 من Huawei، ودبلومة Front-End من ITI.
-• **الخبرة العملية**: تصميم وتطوير منصات ذكية وفحوصات أمنية متقدمة وتطبيقات شبكات معقدة.`;
-    }
-
-    if (q.includes('مهار') || q.includes('skill') || q.includes('cyber') || q.includes('أمن') || q.includes('tools')) {
-      return `**المهارات والتقنيات الأساسية ليحيى أمين** 🛡️⚡
-
-1. **الأمن السيبراني وتقييم الثغرات (VAPT)**:
-   - Vulnerability Assessment & Penetration Testing
-   - Web & Mobile Application Security Testing
-   - Wireless Network Security Auditing
-   - الأدوات: Kali Linux, Nmap, Wireshark, Burp Suite, Metasploit, Aircrack-ng, Hashcat, Wifite.
-
-2. **الشبكات والبنية التحتية**:
-   - TCP/IP, Routing & Switching, VLANs, ACLs, Firewall Configuration (Huawei & Cisco).
-
-3. **البرمجة وتطوير المكونات (Full-Stack & AI)**:
-   - Python, JavaScript (ES6+), React, Node.js, Express.js, RESTful APIs, Gemini & OpenRouter AI integrations.`;
-    }
-
-    if (q.includes('تواصل') || q.includes('contact') || q.includes('إيميل') || q.includes('email') || q.includes('phone') || q.includes('رقم') || q.includes('واتس')) {
-      return `**معلومات التواصل المباشر مع يحيى أمين** 📬
-
-• **البريد الإلكتروني**: yehia.rashed3200@gmail.com
-• **الهاتف / WhatsApp**: +20 1060076900
-• **الموقع**: بنها / القاهرة، مصر
-• **LinkedIn**: [Yehia Amin LinkedIn Profile](https://www.linkedin.com/in/yehia-amin-7a421b372/)`;
-    }
-
-    if (q.includes('مشروع') || q.includes('project') || q.includes('أعمال') || q.includes('اعتمادات') || q.includes('cert')) {
-      return `**أبرز مشاريع واعتمادات يحيى أمين** 💻
-
-• **YA CV AI**: منصة تحليل سير ذاتية وبنائها بالذكاء الاصطناعي مع تقييم نظام الـ ATS.
-• **NØURGINE World**: منصة روابط حيوية ومحلل بيانات متطور لمنشئي المحتوى.
-• **Wi-Fi Security Audit**: فحص ثغرات شبكات الوايرلس واختبار تشفير WPA/WPA2.
-• **Android Security Lab**: فحص أمني وتفكيك وتحديد ثغرات تطبيقات الأندرويد.
-• **الشهادات**: Cisco CCNA (Enterprise & Wireless), Huawei HCIA-Security V4.0, ITI Front-End, CS50 Cybersecurity (HarvardX).`;
-    }
-
-    return `شكراً لسؤالك! يحيى أمين متخصص في الأمن السيبراني (Cybersecurity VAPT)، تطوير تطبيقات الويب الفول ستاك (React & Node.js)، وحلول الذكاء الاصطناعي.
-
-يمكنك الاطلاع على مشاريع يحيى والشهادات في الصفحة أو التواصل معه مباشرة عبر الإيميل: **yehia.rashed3200@gmail.com** أو الواتساب: **+20 1060076900**.`;
-  };
-
   const handleSend = async (textToSend?: string) => {
     const query = (textToSend || input).trim();
     if (!query || isLoading) return;
 
-    const currentKey = apiKey || import.meta.env.VITE_OPENROUTER_API_KEY;
+    const currentKey = apiKey || getLiveDefaultKey();
 
     const updatedMessages = [...messages, { sender: 'user' as const, text: query }];
     setMessages(updatedMessages);
@@ -157,57 +114,52 @@ export const AiChatWidget: React.FC = () => {
     setIsLoading(true);
 
     try {
-      let botReply = '';
+      const apiMessages = [
+        { role: 'system', content: SYSTEM_PROMPT },
+        ...updatedMessages
+          .filter((m) => !m.isError)
+          .slice(-8)
+          .map((m) => ({
+            role: m.sender === 'user' ? 'user' : 'assistant',
+            content: m.text,
+          })),
+      ];
 
-      // 1. Try secure backend serverless proxy if API key is present
-      if (currentKey) {
-        try {
-          const apiMessages = [
-            { role: 'system', content: SYSTEM_PROMPT },
-            ...updatedMessages
-              .filter((m) => !m.isError)
-              .slice(-8)
-              .map((m) => ({
-                role: m.sender === 'user' ? 'user' : 'assistant',
-                content: m.text,
-              })),
-          ];
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${currentKey}`,
+          'HTTP-Referer': window.location.origin || 'https://yehiaamin-site.vercel.app',
+          'X-Title': 'Yehia Amin Portfolio AI Assistant',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: selectedModel,
+          messages: apiMessages,
+          temperature: 0.7,
+        }),
+      });
 
-          const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${currentKey}`,
-              'HTTP-Referer': window.location.origin || 'https://yehiaamin-site.vercel.app',
-              'X-Title': 'Yehia Amin Portfolio AI Assistant',
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              model: selectedModel,
-              messages: apiMessages,
-              temperature: 0.7,
-            }),
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            if (data.choices?.[0]?.message?.content) {
-              botReply = data.choices[0].message.content;
-            }
-          }
-        } catch {
-          // Ignore and fallback to instant local KB
-        }
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        const errMsg = errorData.error?.message || `HTTP ${response.status} ${response.statusText}`;
+        throw new Error(errMsg);
       }
 
-      // 2. Intelligent local fallback (Always works reliably out-of-the-box!)
-      if (!botReply) {
-        botReply = getKnowledgeResponse(query);
-      }
+      const data = await response.json();
+      const botReply = data.choices?.[0]?.message?.content || "I couldn't retrieve a response from OpenRouter.";
 
       setMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
-    } catch {
-      const fallbackMsg = getKnowledgeResponse(query);
-      setMessages((prev) => [...prev, { sender: 'bot', text: fallbackMsg }]);
+    } catch (err: any) {
+      console.error('OpenRouter API error:', err);
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: 'bot',
+          isError: true,
+          text: `❌ **OpenRouter Error**: ${err.message || 'Failed to communicate with OpenRouter API.'}\n\nPlease check your API key or model availability in Settings (⚙️).`,
+        },
+      ]);
     } finally {
       setIsLoading(false);
     }
@@ -249,7 +201,7 @@ export const AiChatWidget: React.FC = () => {
                     Yehia's AI Assistant
                   </h4>
                   <span className="text-[11px] text-cyan-400 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> Active Knowledge Base
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> Live OpenRouter AI
                   </span>
                 </div>
               </div>
@@ -258,7 +210,7 @@ export const AiChatWidget: React.FC = () => {
                 <button
                   onClick={() => setShowSettings(!showSettings)}
                   className={`p-2 rounded-lg transition-colors ${
-                    showSettings ? 'bg-[#B600A8] text-white' : 'text-gray-400 hover:text-white hover:bg-[#1E2026]'
+                    showSettings ? 'bg-[#B600A8] text-[#FFFFFF]' : 'text-gray-400 hover:text-white hover:bg-[#1E2026]'
                   }`}
                   title="Configure OpenRouter Key"
                 >
@@ -290,7 +242,7 @@ export const AiChatWidget: React.FC = () => {
 
                 <div>
                   <label className="block font-bold text-gray-300 mb-1.5">
-                    OpenRouter API Key (Optional):
+                    OpenRouter API Key:
                   </label>
                   <input
                     type="password"
@@ -300,7 +252,7 @@ export const AiChatWidget: React.FC = () => {
                     className="w-full bg-[#141518] border border-[#2B2E36] rounded-xl px-3 py-2 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-[#B600A8]"
                   />
                   <p className="text-[10px] text-gray-500 mt-1">
-                    Enter key to switch to live LLM generation or use default built-in AI Assistant.
+                    API Key active automatically. You can switch keys or custom models here.
                   </p>
                 </div>
 
@@ -347,6 +299,8 @@ export const AiChatWidget: React.FC = () => {
                         className={`max-w-[88%] p-3 rounded-2xl ${
                           m.sender === 'user'
                             ? 'bg-[#B600A8] text-white rounded-br-none shadow-md'
+                            : m.isError
+                            ? 'bg-rose-950/40 border border-rose-600/40 text-rose-200 rounded-bl-none'
                             : 'bg-[#0C0C0C] border border-[#2B2E36] text-[#D7E2EA] rounded-bl-none'
                         }`}
                       >
@@ -361,7 +315,7 @@ export const AiChatWidget: React.FC = () => {
                       <div className="bg-[#0C0C0C] border border-[#2B2E36] p-3 rounded-2xl rounded-bl-none text-cyan-400 flex items-center gap-2">
                         <Loader2 size={16} className="animate-spin text-[#B600A8]" />
                         <span className="text-[11px] text-gray-400 animate-pulse">
-                          Analyzing query &amp; generating answer...
+                          Generating live OpenRouter response...
                         </span>
                       </div>
                     </div>
@@ -389,7 +343,7 @@ export const AiChatWidget: React.FC = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                    placeholder="Ask AI Assistant anything..."
+                    placeholder="Ask live OpenRouter AI Assistant..."
                     disabled={isLoading}
                     className="flex-1 bg-[#141518] border border-[#2B2E36] rounded-full px-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#B600A8] disabled:opacity-50"
                   />
