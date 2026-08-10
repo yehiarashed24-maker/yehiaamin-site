@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2, Send, Mail, User, MessageSquare } from 'lucide-react';
+import { X, CheckCircle2, Send, Mail, User } from 'lucide-react';
 
 interface ContactModalProps {
   isOpen: boolean;
