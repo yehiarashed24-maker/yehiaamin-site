@@ -40,103 +40,165 @@ export const CyberTunnel3D: React.FC = () => {
     tunnel.rotation.x = Math.PI / 2;
     scene.add(tunnel);
 
-    // Group for 3D Holographic Domain Badges
-    const badgeGroup = new THREE.Group();
-    scene.add(badgeGroup);
+    // Group for Solid 3D Meshes (Web Dev, Cybersecurity, AI)
+    const meshGroup = new THREE.Group();
+    scene.add(meshGroup);
 
-    // Helper: Create High-Res 2D Canvas Texture for 3D Holographic Badges
-    const createDomainBadgeTexture = (symbol: string, text: string, strokeColor: string, textColor: string) => {
-      const canvas = document.createElement('canvas');
-      canvas.width = 512;
-      canvas.height = 256;
-      const ctx = canvas.getContext('2d');
-
-      if (ctx) {
-        // Dark Glass Background
-        ctx.fillStyle = 'rgba(15, 16, 20, 0.85)';
-        ctx.beginPath();
-        ctx.roundRect(10, 10, 492, 236, 24);
-        ctx.fill();
-
-        // Neon Glow Border
-        ctx.strokeStyle = strokeColor;
-        ctx.lineWidth = 8;
-        ctx.shadowColor = strokeColor;
-        ctx.shadowBlur = 20;
-        ctx.stroke();
-
-        // Inner Light Highlight
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        // Symbol Text (Big Icon/Code)
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = textColor;
-        ctx.font = 'bold 72px "Kanit", "Courier New", sans-serif';
-        ctx.fillStyle = textColor;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(symbol, 256, 100);
-
-        // Domain Name Text
-        ctx.font = 'bold 36px font-mono, "Kanit", monospace';
-        ctx.fillStyle = '#FFFFFF';
-        ctx.fillText(text, 256, 180);
-      }
-
-      const texture = new THREE.CanvasTexture(canvas);
-      texture.minFilter = THREE.LinearFilter;
-      return texture;
+    // Extrude Options
+    const extrudeSettings = {
+      depth: 2.5,
+      bevelEnabled: true,
+      bevelSegments: 3,
+      steps: 1,
+      bevelSize: 0.6,
+      bevelThickness: 0.6
     };
 
-    // Domain Badges Definition List (Web Dev, Cybersecurity, AI)
-    const badgeDefs = [
-      // Web Dev
-      { symbol: '</>', text: 'WEB DEV', stroke: '#00E1FF', textCol: '#00E1FF' },
-      { symbol: '⚛ REACT', text: 'FRONTEND', stroke: '#00E1FF', textCol: '#00E1FF' },
-      { symbol: 'JS NODE', text: 'FULL STACK', stroke: '#00E1FF', textCol: '#00E1FF' },
+    // Helper 1: Extruded 3D Code Bracket `<` Mesh (Web Dev)
+    const create3DCodeBracketMesh = (colorHex: number) => {
+      const group = new THREE.Group();
+      const shape = new THREE.Shape();
 
-      // Cybersecurity
-      { symbol: '🛡 SEC', text: 'CYBERSECURITY', stroke: '#B600A8', textCol: '#B600A8' },
-      { symbol: '🔒 LOCK', text: 'SOC OPERATIVE', stroke: '#B600A8', textCol: '#B600A8' },
-      { symbol: '🔑 NMAP', text: 'SECURITY AUDIT', stroke: '#B600A8', textCol: '#B600A8' },
+      // Draw `<` 2D Shape
+      shape.moveTo(6, 10);
+      shape.lineTo(-6, 0);
+      shape.lineTo(6, -10);
+      shape.lineTo(10, -7);
+      shape.lineTo(0, 0);
+      shape.lineTo(10, 7);
+      shape.closePath();
 
-      // AI
-      { symbol: '🧠 AI', text: 'AI SYSTEM', stroke: '#00E1FF', textCol: '#00E1FF' },
-      { symbol: '⚡ PYTHON', text: 'DATA & AI', stroke: '#B600A8', textCol: '#B600A8' },
-      { symbol: '📜 CISCO', text: 'CERTIFIED', stroke: '#00E1FF', textCol: '#00E1FF' }
-    ];
+      const geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+      const mat = new THREE.MeshBasicMaterial({
+        color: colorHex,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.65
+      });
 
-    const badges: THREE.Mesh[] = [];
+      const mesh = new THREE.Mesh(geo, mat);
+      group.add(mesh);
+      return group;
+    };
 
-    // Spawn 16 Floating 3D Holographic Badges in the Tunnel
-    for (let i = 0; i < 16; i++) {
-      const def = badgeDefs[i % badgeDefs.length];
-      const texture = createDomainBadgeTexture(def.symbol, def.text, def.stroke, def.textCol);
+    // Helper 2: Extruded 3D Security Shield & Lock Mesh (Cybersecurity)
+    const create3DShieldMesh = (colorHex: number) => {
+      const group = new THREE.Group();
+      const shape = new THREE.Shape();
 
-      const boxGeo = new THREE.BoxGeometry(22, 11, 1.2);
-      const matFront = new THREE.MeshBasicMaterial({ map: texture, transparent: true, opacity: 0.9 });
-      const matSide = new THREE.MeshBasicMaterial({ color: def.stroke === '#00E1FF' ? 0x00e1ff : 0xb600a8, wireframe: true, transparent: true, opacity: 0.4 });
+      // Draw Shield 2D Shape
+      shape.moveTo(0, 11);
+      shape.lineTo(9, 11);
+      shape.quadraticCurveTo(9, 0, 0, -11);
+      shape.quadraticCurveTo(-9, 0, -9, 11);
+      shape.closePath();
 
-      // Apply materials array to BoxGeometry
-      const materials = [matSide, matSide, matSide, matSide, matFront, matFront];
-      const badgeMesh = new THREE.Mesh(boxGeo, materials);
+      const geo = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+      const mat = new THREE.MeshBasicMaterial({
+        color: colorHex,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.65
+      });
+      const shieldMesh = new THREE.Mesh(geo, mat);
+      group.add(shieldMesh);
 
-      badgeMesh.position.set(
+      // Add 3D Lock Shackle Ring on front
+      const lockGeo = new THREE.TorusGeometry(3.5, 0.9, 8, 20, Math.PI);
+      const lockMat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.8
+      });
+      const lockMesh = new THREE.Mesh(lockGeo, lockMat);
+      lockMesh.position.set(0, 2, 2.5);
+      lockMesh.rotation.x = Math.PI;
+      group.add(lockMesh);
+
+      return group;
+    };
+
+    // Helper 3: 3D AI CPU Microchip Mesh with Pins (Artificial Intelligence)
+    const create3DAiChipMesh = (colorHex: number) => {
+      const group = new THREE.Group();
+
+      // Main Chip Wafer Box
+      const waferGeo = new THREE.BoxGeometry(16, 16, 2.5);
+      const waferMat = new THREE.MeshBasicMaterial({
+        color: colorHex,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.6
+      });
+      const wafer = new THREE.Mesh(waferGeo, waferMat);
+      group.add(wafer);
+
+      // Glowing Center AI Die Core
+      const coreGeo = new THREE.BoxGeometry(7, 7, 3);
+      const coreMat = new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        transparent: true,
+        opacity: 0.75
+      });
+      const core = new THREE.Mesh(coreGeo, coreMat);
+      group.add(core);
+
+      // 12 Metallic Pins extending from sides
+      const pinMat = new THREE.MeshBasicMaterial({
+        color: 0x00e1ff,
+        transparent: true,
+        opacity: 0.8
+      });
+
+      const pinGeo = new THREE.BoxGeometry(1, 3.5, 1);
+      for (let side = 0; side < 4; side++) {
+        for (let i = -1; i <= 1; i++) {
+          const pin = new THREE.Mesh(pinGeo, pinMat);
+          const offset = i * 4.5;
+
+          if (side === 0) pin.position.set(offset, 9.5, 0); // Top
+          else if (side === 1) pin.position.set(offset, -9.5, 0); // Bottom
+          else if (side === 2) { pin.position.set(9.5, offset, 0); pin.rotation.z = Math.PI / 2; } // Right
+          else if (side === 3) { pin.position.set(-9.5, offset, 0); pin.rotation.z = Math.PI / 2; } // Left
+
+          group.add(pin);
+        }
+      }
+
+      return group;
+    };
+
+    // Spawn 15 Pure 3D Meshes (Code Brackets, Shields, AI Microchips)
+    const floatingMeshes: THREE.Group[] = [];
+
+    for (let i = 0; i < 15; i++) {
+      let mesh3D: THREE.Group;
+      const type = i % 3; // 0: Web Dev Bracket, 1: Security Shield, 2: AI Chip
+      const colorHex = i % 2 === 0 ? 0x00e1ff : 0xb600a8;
+
+      if (type === 0) {
+        mesh3D = create3DCodeBracketMesh(colorHex);
+      } else if (type === 1) {
+        mesh3D = create3DShieldMesh(colorHex);
+      } else {
+        mesh3D = create3DAiChipMesh(colorHex);
+      }
+
+      mesh3D.position.set(
         (Math.random() - 0.5) * 170,
         (Math.random() - 0.5) * 120,
         (Math.random() - 0.5) * 260
       );
 
-      badgeMesh.rotation.set(
-        (Math.random() - 0.5) * 0.4,
-        (Math.random() - 0.5) * 0.8,
-        (Math.random() - 0.5) * 0.3
+      mesh3D.rotation.set(
+        Math.random() * Math.PI,
+        Math.random() * Math.PI,
+        Math.random() * Math.PI
       );
 
-      badgeGroup.add(badgeMesh);
-      badges.push(badgeMesh);
+      meshGroup.add(mesh3D);
+      floatingMeshes.push(mesh3D);
     }
 
     // Mouse Tracking
@@ -174,10 +236,11 @@ export const CyberTunnel3D: React.FC = () => {
       // Endless Tunnel Motion towards camera
       tunnel.position.z = (elapsedTime * 40) % 50;
 
-      // Rotate floating 3D Domain Badges smoothly
-      badges.forEach((b, idx) => {
-        b.rotation.y = Math.sin(elapsedTime * 0.5 + idx) * 0.3;
-        b.rotation.x = Math.cos(elapsedTime * 0.4 + idx) * 0.15;
+      // Rotate pure 3D Code Brackets, Shields, and AI Microchips smoothly
+      floatingMeshes.forEach((m, idx) => {
+        m.rotation.x += 0.007 * (idx % 3 + 1);
+        m.rotation.y += 0.009 * (idx % 2 + 1);
+        m.rotation.z += 0.005;
       });
 
       // Smooth mouse camera steering
@@ -201,14 +264,13 @@ export const CyberTunnel3D: React.FC = () => {
       }
       tunnelGeo.dispose();
       tunnelMat.dispose();
-      badgeGroup.traverse((obj) => {
+      meshGroup.traverse((obj) => {
         if (obj instanceof THREE.Mesh) {
           obj.geometry.dispose();
           if (Array.isArray(obj.material)) {
-            obj.material.forEach((m) => {
-              if (m.map) m.map.dispose();
-              m.dispose();
-            });
+            obj.material.forEach((m) => m.dispose());
+          } else if (obj.material) {
+            obj.material.dispose();
           }
         }
       });
@@ -219,7 +281,7 @@ export const CyberTunnel3D: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-90"
+      className="absolute inset-0 pointer-events-none z-0 overflow-hidden opacity-85"
       style={{ mixBlendMode: 'screen' }}
     />
   );
