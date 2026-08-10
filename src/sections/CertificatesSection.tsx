@@ -238,17 +238,17 @@ export const CertificatesSection: React.FC = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 30 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-lg bg-[#141518] border border-[#2B2E36] rounded-[32px] p-6 sm:p-8 shadow-2xl text-[#D7E2EA] z-10 overflow-hidden"
+              className="relative w-full max-w-lg max-h-[90vh] overflow-y-auto bg-[#141518] border border-[#2B2E36] rounded-[32px] p-6 sm:p-8 shadow-2xl text-[#D7E2EA] z-10"
             >
               <button
                 onClick={() => setSelectedCert(null)}
-                className="absolute top-6 right-6 p-2 rounded-full bg-[#1E2026] text-[#D7E2EA] hover:bg-[#2B2E36] transition-colors"
+                className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full bg-[#1E2026] text-[#D7E2EA] hover:bg-[#2B2E36] transition-colors z-20"
               >
                 <X size={20} />
               </button>
 
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#B600A8]/20 border border-[#B600A8]/40 text-[#D7E2EA] text-xs uppercase tracking-widest font-medium">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#B600A8]/20 border border-[#B600A8]/40 text-[#D7E2EA] text-xs uppercase tracking-widest font-medium mt-4 sm:mt-0">
                   {selectedCert.issuer === 'AIXamin' ? (
                     <Sparkles size={14} className="text-[#B600A8]" />
                   ) : selectedCert.issuer === 'Huawei ICT Academy' ? (
@@ -259,7 +259,7 @@ export const CertificatesSection: React.FC = () => {
                   <span>{selectedCert.issuer} Verified Credential</span>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white">
+                <h3 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-white pr-8">
                   {selectedCert.title}
                 </h3>
 
@@ -268,7 +268,7 @@ export const CertificatesSection: React.FC = () => {
                 </p>
 
                 {selectedCert.image && (
-                  <div className="w-full h-48 sm:h-56 rounded-2xl overflow-hidden border border-[#2B2E36] bg-[#0C0C0C]">
+                  <div className="w-full h-32 sm:h-56 rounded-2xl overflow-hidden border border-[#2B2E36] bg-[#0C0C0C]">
                     <img
                       src={selectedCert.image}
                       alt={selectedCert.title}
