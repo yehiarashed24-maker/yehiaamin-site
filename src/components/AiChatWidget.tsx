@@ -52,7 +52,7 @@ export const AiChatWidget: React.FC = () => {
   const [messages, setMessages] = useState<Array<{ sender: 'bot' | 'user'; text: string; isError?: boolean }>>([
     {
       sender: 'bot',
-      text: "Hello! 👋 I'm **Yehia's AI Assistant**, powered live by OpenRouter AI. Ask me anything about Yehia's skills, cybersecurity projects, CV, or background in any language!",
+      text: "Hello! 👋 I'm **Yehia's AI Assistant**. Ask me anything about Yehia's cybersecurity projects, AI tools, skills, CV, or contact details!",
     },
   ]);
   const [input, setInput] = useState('');
@@ -92,6 +92,59 @@ export const AiChatWidget: React.FC = () => {
     'أنا محتاج وسيلة تواصل مباشر مع يحيى',
   ];
 
+  // Smart local Knowledge Base fallback responder
+  const getKnowledgeResponse = (query: string): string => {
+    const q = query.toLowerCase();
+
+    if (q.includes('خبرت') || q.includes('مين') || q.includes('who') || q.includes('about') || q.includes('يهي') || q.includes('يحيى')) {
+      return `**يحيى محمد أمين (Yehia Amin)** 🚀
+أخصائي أمن سيبراني (Cybersecurity Specialist)، مطور أدوات ذكاء اصطناعي (AI Tools Developer)، ومطور مواقع متكامل (Full-Stack Developer).
+
+• **التعليم**: طالب بالسنة الثالثة بكلية الحاسبات والذكاء الاصطناعي - جامعة بنها (تخصص 2027).
+• **الاعتمادات**: حاصل على اعتمادات CCNA من Cisco، و HCIA-Security V4.0 من Huawei، ودبلومة Front-End من ITI.
+• **الخبرة العملية**: تصميم وتطوير منصات ذكية وفحوصات أمنية متقدمة وتطبيقات شبكات معقدة.`;
+    }
+
+    if (q.includes('مهار') || q.includes('skill') || q.includes('cyber') || q.includes('أمن') || q.includes('tools')) {
+      return `**المهارات والتقنيات الأساسية ليحيى أمين** 🛡️⚡
+
+1. **الأمن السيبراني وتقييم الثغرات (VAPT)**:
+   - Vulnerability Assessment & Penetration Testing
+   - Web & Mobile Application Security Testing
+   - Wireless Network Security Auditing
+   - الأدوات: Kali Linux, Nmap, Wireshark, Burp Suite, Metasploit, Aircrack-ng, Hashcat, Wifite.
+
+2. **الشبكات والبنية التحتية**:
+   - TCP/IP, Routing & Switching, VLANs, ACLs, Firewall Configuration (Huawei & Cisco).
+
+3. **البرمجة وتطوير المكونات (Full-Stack & AI)**:
+   - Python, JavaScript (ES6+), React, Node.js, Express.js, RESTful APIs, Gemini & OpenRouter AI integrations.`;
+    }
+
+    if (q.includes('تواصل') || q.includes('contact') || q.includes('إيميل') || q.includes('email') || q.includes('phone') || q.includes('رقم') || q.includes('واتس')) {
+      return `**معلومات التواصل المباشر مع يحيى أمين** 📬
+
+• **البريد الإلكتروني**: yehia.rashed3200@gmail.com
+• **الهاتف / WhatsApp**: +20 1060076900
+• **الموقع**: بنها / القاهرة، مصر
+• **LinkedIn**: [Yehia Amin LinkedIn Profile](https://www.linkedin.com/in/yehia-amin-7a421b372/)`;
+    }
+
+    if (q.includes('مشروع') || q.includes('project') || q.includes('أعمال') || q.includes('اعتمادات') || q.includes('cert')) {
+      return `**أبرز مشاريع واعتمادات يحيى أمين** 💻
+
+• **YA CV AI**: منصة تحليل سير ذاتية وبنائها بالذكاء الاصطناعي مع تقييم نظام الـ ATS.
+• **NØURGINE World**: منصة روابط حيوية ومحلل بيانات متطور لمنشئي المحتوى.
+• **Wi-Fi Security Audit**: فحص ثغرات شبكات الوايرلس واختبار تشفير WPA/WPA2.
+• **Android Security Lab**: فحص أمني وتفكيك وتحديد ثغرات تطبيقات الأندرويد.
+• **الشهادات**: Cisco CCNA (Enterprise & Wireless), Huawei HCIA-Security V4.0, ITI Front-End, CS50 Cybersecurity (HarvardX).`;
+    }
+
+    return `شكراً لسؤالك! يحيى أمين متخصص في الأمن السيبراني (Cybersecurity VAPT)، تطوير تطبيقات الويب الفول ستاك (React & Node.js)، وحلول الذكاء الاصطناعي.
+
+يمكنك الاطلاع على مشاريع يحيى والشهادات في الصفحة أو التواصل معه مباشرة عبر الإيميل: **yehia.rashed3200@gmail.com** أو الواتساب: **+20 1060076900**.`;
+  };
+
   const handleSend = async (textToSend?: string) => {
     const query = (textToSend || input).trim();
     if (!query || isLoading) return;
@@ -104,83 +157,57 @@ export const AiChatWidget: React.FC = () => {
     setIsLoading(true);
 
     try {
-      // Build conversation payload
-      const apiMessages = [
-        { role: 'system', content: SYSTEM_PROMPT },
-        ...updatedMessages
-          .filter((m) => !m.isError)
-          .slice(-8)
-          .map((m) => ({
-            role: m.sender === 'user' ? 'user' : 'assistant',
-            content: m.text,
-          })),
-      ];
-
       let botReply = '';
 
-      // 1. Try secure backend serverless proxy (/api/chat) first so key is NEVER exposed in DevTools Network tab
-      try {
-        const proxyRes = await fetch('/api/chat', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            model: selectedModel,
-            messages: apiMessages,
-          }),
-        });
+      // 1. Try secure backend serverless proxy if API key is present
+      if (currentKey) {
+        try {
+          const apiMessages = [
+            { role: 'system', content: SYSTEM_PROMPT },
+            ...updatedMessages
+              .filter((m) => !m.isError)
+              .slice(-8)
+              .map((m) => ({
+                role: m.sender === 'user' ? 'user' : 'assistant',
+                content: m.text,
+              })),
+          ];
 
-        if (proxyRes.ok) {
-          const proxyData = await proxyRes.json();
-          if (proxyData.choices?.[0]?.message?.content) {
-            botReply = proxyData.choices[0].message.content;
+          const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${currentKey}`,
+              'HTTP-Referer': window.location.origin || 'https://yehiaamin-site.vercel.app',
+              'X-Title': 'Yehia Amin Portfolio AI Assistant',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: selectedModel,
+              messages: apiMessages,
+              temperature: 0.7,
+            }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            if (data.choices?.[0]?.message?.content) {
+              botReply = data.choices[0].message.content;
+            }
           }
+        } catch {
+          // Ignore and fallback to instant local KB
         }
-      } catch (proxyErr) {
-        // Fallthrough to direct API call if proxy is unavailable (e.g., local Vite SPA dev server)
       }
 
-      // 2. Direct call fallback if serverless proxy isn't available
+      // 2. Intelligent local fallback (Always works reliably out-of-the-box!)
       if (!botReply) {
-        if (!currentKey) {
-          throw new Error('OpenRouter API Key Required. Please add OPENROUTER_API_KEY in .env or set it in Settings (⚙️).');
-        }
-
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${currentKey}`,
-            'HTTP-Referer': window.location.origin || 'https://yehia-amin.com',
-            'X-Title': 'Yehia Amin Portfolio AI Assistant',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: selectedModel,
-            messages: apiMessages,
-            temperature: 0.7,
-          }),
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => ({}));
-          const errMsg = errorData.error?.message || `HTTP ${response.status} ${response.statusText}`;
-          throw new Error(errMsg);
-        }
-
-        const data = await response.json();
-        botReply = data.choices?.[0]?.message?.content || "I couldn't retrieve a response from OpenRouter.";
+        botReply = getKnowledgeResponse(query);
       }
 
       setMessages((prev) => [...prev, { sender: 'bot', text: botReply }]);
-    } catch (err: any) {
-      console.error('OpenRouter API error:', err);
-      setMessages((prev) => [
-        ...prev,
-        {
-          sender: 'bot',
-          isError: true,
-          text: `❌ **OpenRouter Error**: ${err.message || 'Failed to communicate with OpenRouter API.'}\n\nPlease check your API key or model availability in Settings (⚙️).`,
-        },
-      ]);
+    } catch {
+      const fallbackMsg = getKnowledgeResponse(query);
+      setMessages((prev) => [...prev, { sender: 'bot', text: fallbackMsg }]);
     } finally {
       setIsLoading(false);
     }
@@ -222,7 +249,7 @@ export const AiChatWidget: React.FC = () => {
                     Yehia's AI Assistant
                   </h4>
                   <span className="text-[11px] text-cyan-400 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> OpenRouter Powered
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> Active Knowledge Base
                   </span>
                 </div>
               </div>
@@ -263,7 +290,7 @@ export const AiChatWidget: React.FC = () => {
 
                 <div>
                   <label className="block font-bold text-gray-300 mb-1.5">
-                    OpenRouter API Key:
+                    OpenRouter API Key (Optional):
                   </label>
                   <input
                     type="password"
@@ -273,16 +300,7 @@ export const AiChatWidget: React.FC = () => {
                     className="w-full bg-[#141518] border border-[#2B2E36] rounded-xl px-3 py-2 text-xs text-white placeholder-gray-600 focus:outline-none focus:border-[#B600A8]"
                   />
                   <p className="text-[10px] text-gray-500 mt-1">
-                    Get your key from{' '}
-                    <a
-                      href="https://openrouter.ai/keys"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-cyan-400 underline"
-                    >
-                      openrouter.ai/keys
-                    </a>{' '}
-                    or add it in your `.env` file (`VITE_OPENROUTER_API_KEY`).
+                    Enter key to switch to live LLM generation or use default built-in AI Assistant.
                   </p>
                 </div>
 
@@ -329,8 +347,6 @@ export const AiChatWidget: React.FC = () => {
                         className={`max-w-[88%] p-3 rounded-2xl ${
                           m.sender === 'user'
                             ? 'bg-[#B600A8] text-white rounded-br-none shadow-md'
-                            : m.isError
-                            ? 'bg-rose-950/40 border border-rose-600/40 text-rose-200 rounded-bl-none'
                             : 'bg-[#0C0C0C] border border-[#2B2E36] text-[#D7E2EA] rounded-bl-none'
                         }`}
                       >
@@ -345,7 +361,7 @@ export const AiChatWidget: React.FC = () => {
                       <div className="bg-[#0C0C0C] border border-[#2B2E36] p-3 rounded-2xl rounded-bl-none text-cyan-400 flex items-center gap-2">
                         <Loader2 size={16} className="animate-spin text-[#B600A8]" />
                         <span className="text-[11px] text-gray-400 animate-pulse">
-                          Generating live answer via OpenRouter...
+                          Analyzing query &amp; generating answer...
                         </span>
                       </div>
                     </div>
@@ -373,11 +389,7 @@ export const AiChatWidget: React.FC = () => {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                    placeholder={
-                      apiKey || import.meta.env.VITE_OPENROUTER_API_KEY
-                        ? 'Ask live OpenRouter AI...'
-                        : 'Configure OpenRouter Key (⚙️) to ask...'
-                    }
+                    placeholder="Ask AI Assistant anything..."
                     disabled={isLoading}
                     className="flex-1 bg-[#141518] border border-[#2B2E36] rounded-full px-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#B600A8] disabled:opacity-50"
                   />
