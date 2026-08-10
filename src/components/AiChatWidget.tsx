@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bot, MessageSquare, X, Send, Sparkles, Key, Settings, Loader2, Check } from 'lucide-react';
 
-const getLiveDefaultKey = () => {
-  try {
-    return atob('c2stb3ItdjEtZmY0YjdjM2Q2NzViNjMwZGFjZmIzYjhkNGI4OTkxYzZkYTBhNjBmMWIwYjdhYmIzNTMzZGQwMDZkMjAyMmU3ZQ==');
-  } catch {
-    return '';
-  }
-};
+const DEFAULT_OPENROUTER_KEY = '';
 
 const SYSTEM_PROMPT = `You are the official AI Assistant on Yehia Amin's portfolio website. 
 Answer questions accurately, professionally, and concisely about Yehia Amin. Always reply in the same language as the user's prompt (Arabic, English, French, etc.).
@@ -53,14 +47,14 @@ const AVAILABLE_MODELS = [
 export const AiChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [apiKey, setApiKey] = useState<string>(getLiveDefaultKey());
+  const [apiKey, setApiKey] = useState<string>(DEFAULT_OPENROUTER_KEY);
   const [selectedModel, setSelectedModel] = useState<string>('openrouter/free');
   const [savedSuccess, setSavedSuccess] = useState(false);
 
   const [messages, setMessages] = useState<Array<{ sender: 'bot' | 'user'; text: string; isError?: boolean }>>([
     {
       sender: 'bot',
-      text: "Hello! 👋 I'm **Yehia's Live AI Assistant**, powered live by OpenRouter AI. Ask me anything about Yehia's cybersecurity projects, AI tools, skills, CV, or background in any language!",
+      text: "Hello! 👋 I'm **Yehia's Live AI Assistant**, powered live by OpenRouter. Ask me anything about Yehia's cybersecurity projects, AI tools, skills, CV, or background in any language!",
     },
   ]);
   const [input, setInput] = useState('');
@@ -74,7 +68,7 @@ export const AiChatWidget: React.FC = () => {
     } else if (envKey) {
       setApiKey(envKey);
     } else {
-      setApiKey(getLiveDefaultKey());
+      setApiKey(DEFAULT_OPENROUTER_KEY);
     }
 
     const savedModel = localStorage.getItem('openrouter_model');
@@ -84,7 +78,7 @@ export const AiChatWidget: React.FC = () => {
   }, []);
 
   const saveSettings = (key: string, model: string) => {
-    const trimmedKey = key.trim() || getLiveDefaultKey();
+    const trimmedKey = key.trim() || DEFAULT_OPENROUTER_KEY;
     setApiKey(trimmedKey);
     setSelectedModel(model);
     localStorage.setItem('openrouter_api_key', trimmedKey);
@@ -106,7 +100,7 @@ export const AiChatWidget: React.FC = () => {
     const query = (textToSend || input).trim();
     if (!query || isLoading) return;
 
-    const currentKey = apiKey || getLiveDefaultKey();
+    const currentKey = apiKey || DEFAULT_OPENROUTER_KEY;
 
     const updatedMessages = [...messages, { sender: 'user' as const, text: query }];
     setMessages(updatedMessages);
@@ -188,40 +182,45 @@ export const AiChatWidget: React.FC = () => {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-24 right-6 z-40 w-[92vw] sm:w-[390px] h-[520px] bg-[#141518] border border-[#2B2E36] rounded-[28px] shadow-2xl flex flex-col overflow-hidden text-[#D7E2EA]"
+            className="fixed bottom-0 sm:bottom-24 right-0 sm:right-6 z-50 w-full sm:w-[420px] h-[88vh] sm:h-[600px] bg-[#09090b] border-t sm:border border-[#B600A8]/40 sm:rounded-[32px] rounded-t-[32px] shadow-[0_0_50px_rgba(182,0,168,0.25)] flex flex-col overflow-hidden text-[#D7E2EA]"
           >
-            {/* Header */}
-            <div className="p-4 bg-[#0C0C0C] border-b border-[#2B2E36] flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-[#B600A8]/20 border border-[#B600A8]/40 text-[#B600A8]">
-                  <Bot size={20} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-sm text-white flex items-center gap-2">
-                    Yehia's AI Assistant
-                  </h4>
-                  <span className="text-[11px] text-cyan-400 flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> Live OpenRouter AI
-                  </span>
-                </div>
+            {/* Cyber Header */}
+            <div className="relative p-5 bg-gradient-to-b from-[#1a0b2e] to-[#09090b] border-b border-[#B600A8]/30 flex flex-col items-center justify-center overflow-hidden flex-shrink-0">
+              {/* Holographic background elements */}
+              <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                <div className="absolute -top-10 -left-10 w-40 h-40 bg-cyan-500/20 rounded-full blur-3xl"></div>
+                <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-[#B600A8]/20 rounded-full blur-3xl"></div>
               </div>
-
-              <div className="flex items-center gap-1">
+              
+              <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
                 <button
                   onClick={() => setShowSettings(!showSettings)}
-                  className={`p-2 rounded-lg transition-colors ${
-                    showSettings ? 'bg-[#B600A8] text-[#FFFFFF]' : 'text-gray-400 hover:text-white hover:bg-[#1E2026]'
-                  }`}
-                  title="Configure OpenRouter Key"
+                  className={`p-2 rounded-full transition-all ${showSettings ? 'bg-[#B600A8] text-white shadow-[0_0_15px_rgba(182,0,168,0.5)]' : 'bg-black/40 text-gray-400 hover:text-white hover:bg-black/60 border border-white/5'}`}
+                  title="Configure AI"
                 >
-                  <Settings size={18} />
+                  <Settings size={16} />
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-[#1E2026]"
+                  className="p-2 rounded-full bg-black/40 text-gray-400 hover:text-white hover:bg-rose-500/80 border border-white/5 transition-all"
                 >
-                  <X size={18} />
+                  <X size={16} />
                 </button>
+              </div>
+
+              <div className="relative z-10 flex flex-col items-center mt-2">
+                <div className="relative w-16 h-16 rounded-full bg-[#050505] border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_25px_rgba(34,211,238,0.4)] mb-3">
+                  <Bot size={32} className="text-cyan-400" />
+                  {/* Glowing pulse ring */}
+                  <div className="absolute inset-0 rounded-full border border-cyan-400 animate-ping opacity-25"></div>
+                </div>
+                <h4 className="font-black text-lg text-white tracking-widest uppercase mb-1">
+                  CYBER AI ASSISTANT
+                </h4>
+                <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/40 border border-cyan-500/30">
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]"></span>
+                  <span className="text-[10px] text-cyan-400 font-bold tracking-widest">ONLINE</span>
+                </div>
               </div>
             </div>
 
@@ -296,15 +295,17 @@ export const AiChatWidget: React.FC = () => {
                       className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                       <div
-                        className={`max-w-[88%] p-3 rounded-2xl ${
-                          m.sender === 'user'
-                            ? 'bg-[#B600A8] text-white rounded-br-none shadow-md'
-                            : m.isError
-                            ? 'bg-rose-950/40 border border-rose-600/40 text-rose-200 rounded-bl-none'
-                            : 'bg-[#0C0C0C] border border-[#2B2E36] text-[#D7E2EA] rounded-bl-none'
-                        }`}
+                        className={`max-w-[85%] p-3.5 rounded-2xl text-[13px] relative overflow-hidden ${m.sender === 'user'
+                          ? 'bg-gradient-to-r from-[#B600A8] to-[#f80759] text-white rounded-br-none shadow-[0_0_15px_rgba(182,0,168,0.3)]'
+                          : m.isError
+                            ? 'bg-rose-950/40 border border-rose-500/50 text-rose-200 rounded-bl-none shadow-[0_0_10px_rgba(244,63,94,0.2)]'
+                            : 'bg-[#12141a] border border-cyan-500/30 text-cyan-50 rounded-bl-none shadow-[0_0_10px_rgba(34,211,238,0.1)]'
+                          }`}
                       >
-                        <p className="whitespace-pre-line leading-relaxed">{m.text}</p>
+                        {m.sender === 'bot' && !m.isError && (
+                          <div className="absolute left-0 top-0 bottom-0 w-1 bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></div>
+                        )}
+                        <p className="whitespace-pre-line leading-relaxed relative z-10">{m.text}</p>
                       </div>
                     </div>
                   ))}
@@ -337,23 +338,26 @@ export const AiChatWidget: React.FC = () => {
                 </div>
 
                 {/* Input Footer */}
-                <div className="p-3 bg-[#0C0C0C] border-t border-[#2B2E36] flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                    placeholder="Ask live OpenRouter AI Assistant..."
-                    disabled={isLoading}
-                    className="flex-1 bg-[#141518] border border-[#2B2E36] rounded-full px-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#B600A8] disabled:opacity-50"
-                  />
+                <div className="p-4 bg-[#0a0a0c] border-t border-[#B600A8]/30 flex items-center gap-3 relative z-20 flex-shrink-0">
+                  <div className="flex-1 relative">
+                    <input
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                      placeholder="Ask a question..."
+                      disabled={isLoading}
+                      className="w-full bg-[#141518] border border-[#2B2E36] focus:border-cyan-400 rounded-xl pl-4 pr-10 py-3.5 text-[13px] text-white placeholder-gray-500 focus:outline-none focus:shadow-[0_0_15px_rgba(34,211,238,0.2)] transition-all disabled:opacity-50"
+                    />
+                    <Sparkles size={16} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500" />
+                  </div>
                   <button
                     onClick={() => handleSend()}
-                    disabled={isLoading}
-                    className="p-2.5 rounded-full bg-[#B600A8] text-white hover:bg-[#900085] transition-colors cursor-pointer disabled:opacity-50"
+                    disabled={isLoading || !input.trim()}
+                    className="p-3.5 rounded-xl bg-gradient-to-r from-[#B600A8] to-[#f80759] text-white hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-50 shadow-[0_0_15px_rgba(182,0,168,0.4)]"
                     title="Send message"
                   >
-                    {isLoading ? <Loader2 size={14} className="animate-spin" /> : <Send size={14} />}
+                    {isLoading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} className="ml-0.5" />}
                   </button>
                 </div>
               </>
