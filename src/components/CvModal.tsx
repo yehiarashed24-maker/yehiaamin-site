@@ -72,7 +72,7 @@ export const CvModal: React.FC<CvModalProps> = ({ isOpen, onClose }) => {
                 </span>
                 <span className="flex items-center gap-2">
                   <MapPin size={14} className="text-[#7721B1]" />
-                  Banha / Cairo, Egypt
+                  Cairo, Egypt
                 </span>
               </div>
 

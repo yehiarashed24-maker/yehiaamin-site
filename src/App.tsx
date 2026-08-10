@@ -3,14 +3,14 @@ import { HeroSection } from './sections/HeroSection';
 import { AboutSection } from './sections/AboutSection';
 import { SkillsSection } from './sections/SkillsSection';
 import { ProjectsSection } from './sections/ProjectsSection';
-
 import { CertificatesSection } from './sections/CertificatesSection';
+import { CvSection } from './sections/CvSection';
 import { ContactModal } from './components/ContactModal';
 import { CvModal } from './components/CvModal';
 import { AiChatWidget } from './components/AiChatWidget';
 import { ContactButton } from './components/ContactButton';
 import { CustomCursor } from './components/CustomCursor';
-import { ArrowUp, Mail, FileText, Phone } from 'lucide-react';
+import { ArrowUp, Mail, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const LinkedinIcon = ({ size = 22, className = "" }: { size?: number; className?: string }) => (
@@ -57,43 +57,12 @@ export function App() {
         {/* 4. Projects Section */}
         <ProjectsSection />
 
-
-
-        {/* 6. Certificates Section */}
+        {/* 5. Certificates Section */}
         <CertificatesSection />
+
+        {/* 6. Craftwork-Style Resume Section */}
+        <CvSection onOpenModal={() => setIsCvOpen(true)} />
       </main>
-      {/* Quick Resume Bar */}
-      <section className="bg-[#141518] border-t border-[#D7E2EA]/10 py-12 px-6 text-center relative z-20">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="text-left">
-            <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white flex items-center gap-2">
-              <FileText className="text-[#B600A8]" /> Complete Curriculum Vitae
-            </h3>
-            <p className="text-xs sm:text-sm text-gray-400 font-light mt-1">
-              Preview Yehia Amin's complete qualification details or download a PDF copy.
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setIsCvOpen(true)}
-              className="px-6 py-3 rounded-full bg-[#0C0C0C] border border-[#D7E2EA]/30 text-white font-bold uppercase text-xs tracking-wider hover:bg-[#D7E2EA] hover:text-black transition-colors cursor-pointer"
-            >
-              Preview CV
-            </motion.button>
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              href="/assets/docs/yehia-cv.pdf"
-              download="Yehia_Amin_CV.pdf"
-              className="px-6 py-3 rounded-full bg-[#B600A8] text-white font-bold uppercase text-xs tracking-wider hover:bg-[#900085] transition-colors shadow-lg"
-            >
-              Download PDF
-            </motion.a>
-          </div>
-        </div>
-      </section>
 
       {/* Footer Section */}
       <footer className="bg-[#0C0C0C] text-[#D7E2EA] px-6 md:px-12 py-16 border-t border-[#D7E2EA]/10 relative z-20">

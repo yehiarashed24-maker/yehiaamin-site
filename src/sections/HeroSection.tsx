@@ -31,6 +31,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenContact }) => {
     { label: 'Skills', href: '#skills' },
     { label: 'Projects', href: '#projects' },
     { label: 'Certificates', href: '#certificates' },
+    { label: 'Resume', href: '#cv-section' },
     { label: 'Contact', action: onOpenContact },
   ];
 
