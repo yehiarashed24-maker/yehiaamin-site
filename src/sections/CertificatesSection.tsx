@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FadeIn } from '../components/FadeIn';
-import { ShieldCheck, ExternalLink, CheckCircle2, Award, X, Sparkles, Cpu } from 'lucide-react';
+import { ShieldCheck, ExternalLink, CheckCircle2, X, Sparkles, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TextReveal } from '../components/TextReveal';
 import { CardStack } from '../components/ui/card-stack';
