@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, CheckCircle2, Terminal, SquareTerminal } from 'lucide-react';
+import { CheckCircle2, Terminal, SquareTerminal } from 'lucide-react';
 
 interface ContactModalProps {
   isOpen: boolean;
