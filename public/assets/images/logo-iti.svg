@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="itiRedGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C8292B"/>
+      <stop offset="50%" stop-color="#A61C1E"/>
+      <stop offset="100%" stop-color="#841214"/>
+    </linearGradient>
+    <linearGradient id="itiBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141518"/>
+      <stop offset="100%" stop-color="#09090B"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#C8292B" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Dark Card Background Surface -->
+  <rect width="800" height="450" rx="32" fill="url(#itiBg)"/>
+  <rect width="794" height="444" x="3" y="3" rx="30" fill="none" stroke="#C8292B" stroke-width="2" stroke-opacity="0.4"/>
+
+  <!-- Centered Content Wrapper -->
+  <g transform="translate(60, 85)" filter="url(#shadow)">
+    
+    <!-- ITI Stylized Red Monogram (Left Side) -->
+    <g fill="url(#itiRedGrad)">
+      <!-- First 'i' stem -->
+      <path d="M 40, 60 C 40, 50 50, 40 65, 40 L 80, 40 C 80, 100 80, 160 80, 200 C 80, 230 65, 250 40, 240 L 40, 60 Z"/>
+      <!-- First 'i' dot -->
+      <circle cx="60" cy="20" r="18"/>
+
+      <!-- Center 'T' stem & bar -->
+      <path d="M 110, 85 L 260, 85 C 250, 95 240, 105 230, 115 L 150, 115 L 150, 230 C 150, 260 135, 275 110, 265 L 110, 85 Z"/>
+
+      <!-- Second 'i' stem -->
+      <path d="M 210, 140 C 210, 130 220, 120 235, 120 L 260, 120 L 260, 250 C 260, 280 245, 295 210, 285 L 210, 140 Z"/>
+      <!-- Second 'i' dot -->
+      <circle cx="235" cy="100" r="18" fill="#FFFFFF"/>
+    </g>
+
+    <!-- Vertical Red Separator Line -->
+    <line x1="285" y1="35" x2="285" y2="270" stroke="#C8292B" stroke-width="6" stroke-linecap="round"/>
+
+    <!-- Right Side Typography -->
+    <g font-family="'Kanit', 'Arial', sans-serif" font-weight="700" fill="#FFFFFF">
+      <text x="315" y="105" font-size="50" letter-spacing="1">Information</text>
+      <text x="315" y="175" font-size="50" letter-spacing="1">Technology</text>
+      <text x="315" y="245" font-size="50" letter-spacing="1">Institute</text>
+    </g>
+  </g>
+</svg>

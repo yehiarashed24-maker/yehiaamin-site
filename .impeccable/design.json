@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-10T13:17:00.000Z",
+  "title": "Design System: Yehia Amin Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Electric Magenta",
+        "canonical": "#B600A8",
+        "tonalRamp": ["#2C0028", "#50004B", "#76006E", "#9A0090", "#B600A8", "#D42DC7", "#E765DD", "#F8A2F2"]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Cyber Cyan",
+        "canonical": "#00E1FF",
+        "tonalRamp": ["#003840", "#006877", "#009BB2", "#00C6E2", "#00E1FF", "#4DE9FF", "#8CEFFF", "#CCEFFF"]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Obsidian Dark",
+        "canonical": "#0C0C0C",
+        "tonalRamp": ["#000000", "#0C0C0C", "#141518", "#1E2026", "#2B2E36", "#454954", "#6C7282", "#D7E2EA"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero title and primary statements." },
+      "headline": { "displayName": "Headline", "purpose": "Section headers." },
+      "body": { "displayName": "Body", "purpose": "Paragraphs and descriptions." }
+    },
+    "shadows": [
+      { "name": "magenta-glow", "value": "0px 4px 24px rgba(181, 1, 167, 0.25)", "purpose": "Interactive focus and button hover." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Action Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Pill-shaped primary action button with electric magenta fill.",
+      "html": "<button class=\"ds-btn-primary\">GET IN TOUCH</button>",
+      "css": ".ds-btn-primary { background: #B600A8; color: #FFFFFF; padding: 12px 28px; border-radius: 9999px; font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em; border: none; cursor: pointer; transition: all 0.2s ease; shadow: 0px 4px 12px rgba(182, 0, 168, 0.3); } .ds-btn-primary:hover { background: #900085; transform: scale(1.05); }"
+    },
+    {
+      "name": "Secondary Outline Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Outline pill button with ice silver border.",
+      "html": "<button class=\"ds-btn-secondary\">PREVIEW CV</button>",
+      "css": ".ds-btn-secondary { background: #0C0C0C; color: #D7E2EA; padding: 12px 28px; border-radius: 9999px; font-weight: 700; text-transform: uppercase; font-size: 12px; letter-spacing: 0.05em; border: 1px solid rgba(215, 226, 234, 0.3); cursor: pointer; transition: all 0.2s ease; } .ds-btn-secondary:hover { background: #D7E2EA; color: #0C0C0C; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Cybernetic Canvas",
+    "overview": "The design system for Yehia Amin's personal portfolio is a high-contrast, obsidian-dark digital interface built around precision engineering, high-tech aesthetics, and immersive 3D depth.",
+    "keyCharacteristics": [
+      "Obsidian Dark Canvas",
+      "Electric Dual-Neon Accents",
+      "Precision Micro-Interactions",
+      "Geometric Typography"
+    ],
+    "rules": [
+      { "name": "The Neon Rarity Rule", "body": "Neon accent colors are reserved strictly for key interactive elements, badges, and focal points. They occupy ≤15% of any screen surface.", "section": "colors" },
+      { "name": "The Dark Layering Rule", "body": "Depth is created through surface contrast and thin borders, relying on ambient neon glow rather than traditional light drop shadows.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do maintain deep obsidian #0C0C0C as the primary background color.",
+      "Do use Kanit with bold uppercase styling for major headings.",
+      "Do apply rounded-full to interactive pill buttons and status tags."
+    ],
+    "donts": [
+      "Don't use light background colors for main sections.",
+      "Don't overuse electric neon accent colors on body text or wide background areas.",
+      "Don't use sharp 0px corners on interactive cards or modals."
+    ]
+  }
+}

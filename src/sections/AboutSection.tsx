@@ -98,6 +98,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({ onOpenContact }) => 
           <TextReveal
             text="ABOUT ME"
             mode="word"
+            as="h2"
             className="hero-heading font-black uppercase leading-none tracking-tight text-center select-none text-white max-w-full"
             style={{ fontSize: 'clamp(2.8rem, 11vw, 150px)' }}
           />

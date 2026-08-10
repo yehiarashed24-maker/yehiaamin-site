@@ -3,6 +3,7 @@ import { FadeIn } from '../components/FadeIn';
 import { ShieldCheck, ExternalLink, CheckCircle2, Award, X, Sparkles, Cpu } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TextReveal } from '../components/TextReveal';
+import { CardStack } from '../components/ui/card-stack';
 
 interface CertificateItem {
   id: string;
@@ -15,6 +16,7 @@ interface CertificateItem {
   skills: string[];
   credentialUrl: string;
   image: string;
+  logo?: string;
 }
 
 const certificatesData: CertificateItem[] = [
@@ -30,6 +32,7 @@ const certificatesData: CertificateItem[] = [
     skills: ['Network Security', 'Enterprise Networks', 'Network Automation', 'WAN & OSPF'],
     credentialUrl: 'https://www.netacad.com',
     image: '/assets/images/cert-ccna-1.png',
+    logo: '/assets/images/logo-cisco.svg',
   },
   {
     id: '02',
@@ -43,6 +46,7 @@ const certificatesData: CertificateItem[] = [
     skills: ['Switching & VLANs', 'WLAN Configuration', 'IPv4/IPv6 Routing', 'STP & EtherChannel'],
     credentialUrl: 'https://www.netacad.com',
     image: '/assets/images/cert-ccna-2.png',
+    logo: '/assets/images/logo-cisco.svg',
   },
   {
     id: '03',
@@ -56,6 +60,7 @@ const certificatesData: CertificateItem[] = [
     skills: ['Huawei Firewall', 'Network Security', 'IPsec & SSL VPN', 'Intrusion Prevention'],
     credentialUrl: 'https://e.huawei.com/en/talent/ict-academy/',
     image: '/assets/images/cert-hcia.png',
+    logo: '/assets/images/logo-huawei.svg',
   },
   {
     id: '04',
@@ -69,6 +74,7 @@ const certificatesData: CertificateItem[] = [
     skills: ['HTML5/CSS3', 'JavaScript ES6+', 'ReactJS', 'Node.js', 'Bootstrap'],
     credentialUrl: 'https://iti.gov.eg/',
     image: '/assets/images/cert-iti.png',
+    logo: '/assets/images/logo-iti.svg',
   },
   {
     id: '05',
@@ -82,6 +88,7 @@ const certificatesData: CertificateItem[] = [
     skills: ['Cyber Threats', 'Security Practices', 'Data Confidentiality', 'Incident Response'],
     credentialUrl: 'https://www.netacad.com',
     image: '/assets/images/cert-cybersecurity.png',
+    logo: '/assets/images/logo-cisco.svg',
   },
   {
     id: '06',
@@ -95,6 +102,7 @@ const certificatesData: CertificateItem[] = [
     skills: ['Endpoint Defense', 'Malware Analysis', 'Host Security', 'Network Connections'],
     credentialUrl: 'https://www.netacad.com',
     image: '/assets/images/cert-endpoint.png',
+    logo: '/assets/images/logo-cisco.svg',
   },
   {
     id: '07',
@@ -108,12 +116,22 @@ const certificatesData: CertificateItem[] = [
     skills: ['Defensive Security', 'Web Vulnerabilities', 'Cryptography', 'Harvard Security'],
     credentialUrl: 'https://pll.harvard.edu/',
     image: '/assets/images/cert-cs50.png',
+    logo: '/assets/images/logo-harvard.svg',
   },
 ];
 
 export const CertificatesSection: React.FC = () => {
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
 
+  // Escape key to close modal
+  React.useEffect(() => {
+    if (!selectedCert) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedCert(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedCert]);
   return (
     <section
       id="certificates"
@@ -122,103 +140,24 @@ export const CertificatesSection: React.FC = () => {
       <div className="max-w-5xl mx-auto w-full">
         {/* Heading */}
         <FadeIn delay={0} y={40}>
-          <div className="w-full flex justify-center mb-16 sm:mb-20 md:mb-28">
+          <div className="w-full flex justify-center mb-12 sm:mb-16 md:mb-20">
             <TextReveal
               text="CERTIFICATES"
               mode="word"
+              as="h2"
               className="font-black uppercase text-center text-[#0C0C0C] leading-none tracking-tight select-none max-w-full"
               style={{ fontSize: 'clamp(2.6rem, 10vw, 140px)' }}
             />
           </div>
         </FadeIn>
 
-        {/* Certificates List */}
-        <div className="flex flex-col">
-          {certificatesData.map((item, index) => (
-            <FadeIn key={item.id} delay={index * 0.07} y={30}>
-              <motion.div
-                whileHover={{ x: 8, scale: 1.01 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                data-cursor="cert"
-                className={`group flex flex-col md:flex-row md:items-start justify-between py-8 sm:py-10 md:py-12 border-b border-[rgba(12,12,12,0.15)] transition-all duration-300 relative overflow-hidden rounded-2xl px-3 hover:bg-gradient-to-r hover:from-[#B600A8]/5 hover:via-purple-500/5 hover:to-[#00E1FF]/5 ${
-                  index === 0 ? 'border-t border-[rgba(12,12,12,0.15)]' : ''
-                }`}
-              >
-                {/* 3D Holographic Sheen Sweep Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none opacity-40" />
-
-                {/* Number */}
-                <div
-                  className="font-black text-[#0C0C0C] group-hover:text-[#B600A8] transition-colors duration-300 leading-none mb-4 md:mb-0 md:w-1/4 flex-shrink-0 select-none"
-                  style={{ fontSize: 'clamp(2.5rem, 8vw, 110px)' }}
-                >
-                  {item.id}
-                </div>
-
-                {/* Main Info */}
-                <div className="flex flex-col md:w-3/4 space-y-4 justify-between">
-                  <div className="space-y-3">
-                    <div className="flex flex-wrap items-center gap-2.5">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0C0C0C] text-white text-xs uppercase tracking-widest font-medium">
-                        {item.issuer === 'AIXamin' ? (
-                          <Sparkles size={14} className="text-[#B600A8]" />
-                        ) : item.issuer === 'Huawei ICT Academy' ? (
-                          <Cpu size={14} className="text-red-500" />
-                        ) : (
-                          <ShieldCheck size={14} className="text-[#B600A8]" />
-                        )}
-                        {item.issuer}
-                      </span>
-                      <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full border border-[#0C0C0C]/20 text-[#0C0C0C] text-[11px] uppercase tracking-wider font-semibold">
-                        <CheckCircle2 size={12} className="text-emerald-600" />
-                        {item.date}
-                      </span>
-                      <span className="text-xs uppercase tracking-widest text-[#0C0C0C]/50 font-medium">
-                        {item.type}
-                      </span>
-                    </div>
-
-                    <h3
-                      className="font-black uppercase text-[#0C0C0C] tracking-wide"
-                      style={{ fontSize: 'clamp(1.1rem, 2.2vw, 2rem)' }}
-                    >
-                      {item.title}
-                    </h3>
-
-                    <p
-                      className="font-light text-[#0C0C0C] leading-relaxed max-w-2xl opacity-75"
-                      style={{ fontSize: 'clamp(0.85rem, 1.5vw, 1.15rem)' }}
-                    >
-                      {item.description}
-                    </p>
-                  </div>
-
-                  {/* Skills badges + Verify button */}
-                  <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
-                    <div className="flex flex-wrap gap-1.5">
-                      {item.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-2.5 py-1 rounded-md bg-[#0C0C0C]/5 text-[#0C0C0C]/80 font-semibold text-xs uppercase tracking-wider"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
-                    <button
-                      onClick={() => setSelectedCert(item)}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0C0C0C] text-white font-medium uppercase text-xs tracking-widest transition-all duration-300 hover:bg-[#B600A8] active:scale-95 cursor-pointer shadow-md"
-                    >
-                      <Award size={14} />
-                      <span>Verify Credential</span>
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            </FadeIn>
-          ))}
-        </div>
+        {/* Interactive 3D Card Stack */}
+        <FadeIn delay={0.1} y={30}>
+          <CardStack
+            items={certificatesData}
+            onSelectCert={(cert) => setSelectedCert(cert)}
+          />
+        </FadeIn>
       </div>
 
       {/* Credential Verification Modal */}

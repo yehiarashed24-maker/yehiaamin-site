@@ -44,23 +44,24 @@ export function App() {
       {/* Desktop Custom Precision Cursor */}
       <CustomCursor />
 
-      {/* 1. Hero Section */}
-      <HeroSection onOpenContact={() => setIsContactOpen(true)} />
+      <main>
+        {/* 1. Hero Section */}
+        <HeroSection onOpenContact={() => setIsContactOpen(true)} />
 
-      {/* 2. About Section */}
-      <AboutSection onOpenContact={() => setIsContactOpen(true)} />
+        {/* 2. About Section */}
+        <AboutSection onOpenContact={() => setIsContactOpen(true)} />
 
-      {/* 3. Skills Section */}
-      <SkillsSection />
+        {/* 3. Skills Section */}
+        <SkillsSection />
 
-      {/* 4. Projects Section */}
-      <ProjectsSection />
+        {/* 4. Projects Section */}
+        <ProjectsSection />
 
 
 
-      {/* 6. Certificates Section */}
-      <CertificatesSection />
-
+        {/* 6. Certificates Section */}
+        <CertificatesSection />
+      </main>
       {/* Quick Resume Bar */}
       <section className="bg-[#141518] border-t border-[#D7E2EA]/10 py-12 px-6 text-center relative z-20">
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">

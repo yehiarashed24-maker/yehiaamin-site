@@ -7,6 +7,7 @@ interface TextRevealProps {
   delay?: number;
   mode?: 'word' | 'char';
   style?: React.CSSProperties;
+  as?: 'h1' | 'h2' | 'h3' | 'span';
 }
 
 export const TextReveal: React.FC<TextRevealProps> = ({
@@ -15,6 +16,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
   delay = 0,
   mode = 'word',
   style,
+  as: Tag = 'h1',
 }) => {
   const containerRef = useRef<HTMLHeadingElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: '-10% 0px' });
@@ -49,7 +51,7 @@ export const TextReveal: React.FC<TextRevealProps> = ({
   };
 
   return (
-    <h1
+    <Tag
       ref={containerRef}
       className={`inline-flex flex-wrap items-center justify-center gap-x-[0.25em] gap-y-[0.1em] overflow-hidden ${className}`}
       style={style}
@@ -68,6 +70,6 @@ export const TextReveal: React.FC<TextRevealProps> = ({
           </span>
         ))}
       </motion.span>
-    </h1>
+    </Tag>
   );
 };

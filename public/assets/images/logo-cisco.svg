@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="ciscoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00BCEB"/>
+      <stop offset="100%" stop-color="#049FD9"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141518"/>
+      <stop offset="100%" stop-color="#09090B"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" rx="32" fill="url(#bgGrad)"/>
+  <rect width="794" height="444" x="3" y="3" rx="30" fill="none" stroke="#00BCEB" stroke-width="2" stroke-opacity="0.3"/>
+  
+  <!-- Cisco Bridge Bars -->
+  <g transform="translate(265, 80) scale(1.1)" fill="url(#ciscoGrad)">
+    <rect x="0" y="45" width="12" height="35" rx="6"/>
+    <rect x="30" y="25" width="12" height="55" rx="6"/>
+    <rect x="60" y="45" width="12" height="35" rx="6"/>
+    <rect x="90" y="0" width="12" height="80" rx="6"/>
+    <rect x="120" y="45" width="12" height="35" rx="6"/>
+    <rect x="150" y="25" width="12" height="55" rx="6"/>
+    <rect x="180" y="45" width="12" height="35" rx="6"/>
+    <rect x="210" y="10" width="12" height="70" rx="6"/>
+    <rect x="240" y="45" width="12" height="35" rx="6"/>
+  </g>
+
+  <!-- Typography -->
+  <text x="400" y="275" font-family="'Kanit', sans-serif" font-weight="900" font-size="52" fill="#FFFFFF" text-anchor="middle" letter-spacing="6">CISCO</text>
+  <text x="400" y="330" font-family="'Kanit', sans-serif" font-weight="600" font-size="24" fill="#00BCEB" text-anchor="middle" letter-spacing="8">NETWORKING ACADEMY</text>
+</svg>

@@ -21,6 +21,16 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
     return () => clearInterval(interval);
   }, []);
 
+  // Escape key to close modal
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
@@ -119,12 +129,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="group">
-                      <label className="block text-purple-400 text-sm mb-2 flex items-center gap-2">
+                      <label htmlFor="contact-name" className="block text-purple-400 text-sm mb-2 flex items-center gap-2">
                         {`> input_name`} <span className="text-gray-600">--required</span>
                       </label>
                       <div className="flex items-center bg-[#111] border border-[#222] focus-within:border-purple-500/50 rounded-lg overflow-hidden transition-colors px-4 py-3">
                         <span className="text-purple-500 mr-3 select-none">$</span>
                         <input
+                          id="contact-name"
                           type="text"
                           required
                           placeholder="Your full name"
@@ -136,12 +147,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                     </div>
 
                     <div className="group">
-                      <label className="block text-purple-400 text-sm mb-2 flex items-center gap-2">
+                      <label htmlFor="contact-email" className="block text-purple-400 text-sm mb-2 flex items-center gap-2">
                         {`> input_contact`} <span className="text-gray-600">--email</span>
                       </label>
                       <div className="flex items-center bg-[#111] border border-[#222] focus-within:border-purple-500/50 rounded-lg overflow-hidden transition-colors px-4 py-3">
                         <span className="text-purple-500 mr-3 select-none">$</span>
                         <input
+                          id="contact-email"
                           type="email"
                           required
                           placeholder="yourname@example.com"
@@ -153,12 +165,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                     </div>
 
                     <div className="group">
-                      <label className="block text-purple-400 text-sm mb-2 flex items-center gap-2">
+                      <label htmlFor="contact-message" className="block text-purple-400 text-sm mb-2 flex items-center gap-2">
                         {`> write_message`} <span className="text-gray-600">--payload</span>
                       </label>
                       <div className="flex items-start bg-[#111] border border-[#222] focus-within:border-purple-500/50 rounded-lg overflow-hidden transition-colors px-4 py-3">
                         <span className="text-purple-500 mr-3 mt-0.5 select-none">{`>`}</span>
                         <textarea
+                          id="contact-message"
                           rows={4}
                           required
                           placeholder="Tell me about your project or inquiry..."
