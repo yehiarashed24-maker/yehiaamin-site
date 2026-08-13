@@ -6,6 +6,7 @@ const marqueeImages = [
   '/assets/images/wifi-project.png',
   '/assets/images/phishing-project.png',
   '/assets/images/android-project.png',
+  '/assets/images/cert-cib-genai.png',
   '/assets/images/cert-ccna-1.png',
   '/assets/images/cert-ccna-2.png',
   '/assets/images/cert-hcia.png',

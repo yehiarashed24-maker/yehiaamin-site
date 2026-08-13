@@ -22,6 +22,20 @@ interface CertificateItem {
 const certificatesData: CertificateItem[] = [
   {
     id: '01',
+    issuer: 'CIB Egypt',
+    title: 'Generative AI Principles & Best Practices',
+    type: 'CIB Summer Internship Program',
+    date: 'Jul 2026',
+    certId: 'CIB-GENAI-5584',
+    description:
+      'Certificate of Attendance acknowledging participation, completion, and understanding of the principles, approaches, and best practices of "Generative AI" as an integral part of the CIB Summer Internship Program.',
+    skills: ['Generative AI', 'LLM Architectures', 'Prompt Engineering', 'AI Integration'],
+    credentialUrl: 'https://www.cibeg.com',
+    image: '/assets/images/cert-cib-genai.png',
+    logo: '/assets/images/logo-cib.svg',
+  },
+  {
+    id: '02',
     issuer: 'Cisco Networking Academy',
     title: 'CCNA: Enterprise Networking, Security, and Automation',
     type: 'Faculty of Computers & AI, Banha University',

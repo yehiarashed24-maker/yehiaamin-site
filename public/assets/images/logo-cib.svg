@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cibBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00529B"/>
+      <stop offset="100%" stop-color="#002D62"/>
+    </linearGradient>
+    <linearGradient id="cibOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F26522"/>
+      <stop offset="100%" stop-color="#D94100"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141518"/>
+      <stop offset="100%" stop-color="#09090B"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="450" rx="32" fill="url(#bgGrad)"/>
+  <rect width="794" height="444" x="3" y="3" rx="30" fill="none" stroke="#00529B" stroke-width="2" stroke-opacity="0.4"/>
+  
+  <!-- CIB Icon Emblem -->
+  <g transform="translate(340, 70)">
+    <rect x="0" y="0" width="120" height="120" rx="20" fill="url(#cibBlue)"/>
+    <path d="M 25 25 H 95 V 95 H 25 Z" fill="none" stroke="url(#cibOrange)" stroke-width="10" stroke-linejoin="round"/>
+    <text x="60" y="74" font-family="'Kanit', sans-serif" font-weight="900" font-size="34" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">CIB</text>
+  </g>
+
+  <!-- Typography -->
+  <text x="400" y="270" font-family="'Kanit', sans-serif" font-weight="900" font-size="56" fill="#FFFFFF" text-anchor="middle" letter-spacing="8">CIB EGYPT</text>
+  <text x="400" y="330" font-family="'Kanit', sans-serif" font-weight="600" font-size="20" fill="#F26522" text-anchor="middle" letter-spacing="5">SUMMER INTERNSHIP PROGRAM</text>
+</svg>
