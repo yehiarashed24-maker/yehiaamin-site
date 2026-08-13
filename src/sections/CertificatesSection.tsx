@@ -22,7 +22,7 @@ interface CertificateItem {
 const certificatesData: CertificateItem[] = [
   {
     id: '01',
-    issuer: 'CIB Egypt',
+    issuer: 'CIB Summer Internship',
     title: 'Generative AI Principles & Best Practices',
     type: 'CIB Summer Internship Program',
     date: 'Jul 2026',
