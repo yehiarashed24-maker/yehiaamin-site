@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 
 const marqueeImages = [
+  '/assets/images/cert-chatgpt-prompt.png',
   '/assets/images/ya-cv-ai-project.png',
   '/assets/images/nourgine-project.png',
   '/assets/images/wifi-project.png',

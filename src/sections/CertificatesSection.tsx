@@ -21,9 +21,23 @@ interface CertificateItem {
 
 const certificatesData: CertificateItem[] = [
   {
-    id: '01',
-    issuer: 'CIB Summer Internship',
-    title: 'Generative AI Principles & Best Practices',
+    id: '09',
+    issuer: 'AIXamin',
+    title: 'ChatGPT Prompt Engineering ',
+    type: 'AIXamin Professional Certification',
+    date: '09 Aug 2026',
+    certId: 'CERT-c4806540-4e3b-46a1-855e-f5347dad5f67',
+    description:
+      'Professional Certification from AIXamin acknowledging successful examination completion and mastery in ChatGPT Prompt Engineering, System Prompt Design, and Advanced LLM Interaction.',
+    skills: ['Prompt Engineering', 'ChatGPT & GPT-4', 'System Prompting', 'AI Optimization'],
+    credentialUrl: '/assets/docs/chatgpt-prompt-engineering-cert.pdf',
+    image: '/assets/images/cert-chatgpt-prompt.png',
+    logo: '/assets/images/logo-aixamin.png',
+  },
+  {
+    id: '08',
+    issuer: 'CIB',
+    title: 'CIB Summer Internship',
     type: 'CIB Summer Internship Program',
     date: 'Jul 2026',
     certId: 'CIB-GENAI-5584',
@@ -35,7 +49,7 @@ const certificatesData: CertificateItem[] = [
     logo: '/assets/images/logo-cib.svg',
   },
   {
-    id: '02',
+    id: '01',
     issuer: 'Cisco Networking Academy',
     title: 'CCNA: Enterprise Networking, Security, and Automation',
     type: 'Faculty of Computers & AI, Banha University',
