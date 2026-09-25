@@ -14,20 +14,33 @@ About Yehia Amin:
   • Phone / WhatsApp: +20 1060076900
   • Location: Banha / Cairo, Egypt
 - Key Skills:
-  • Programming & Web: JavaScript (ES6+), Node.js, Express.js, React, Tailwind CSS, Python, RESTful APIs, JWT Authentication.
-  • AI & LLM Tools: Gemini API Integration, Prompt Engineering, OpenRouter APIs, AI Resume Analysis, RAG workflows.
-  • Cybersecurity & PenTesting: Vulnerability Assessment & Penetration Testing (VAPT), Kali Linux, Nmap, Wireshark, Burp Suite, Aircrack-ng, Bettercap.
-- Professional Certifications:
-  • CCNA (Cisco Certified Network Associate)
-  • HCIA-Security V4.0 (Huawei Certified ICT Associate - Security)
-  • ITI Front-End Web Development Certification
+  • Programming & AI Engineering: RAG, LangChain, ChromaDB, FastAPI, Python, Gemini API, Node.js, Express.js, React, Tailwind CSS, RESTful APIs, AWS.
+  • Cybersecurity & PenTesting: Vulnerability Assessment & Penetration Testing (VAPT), Kali Linux, Nmap, Wireshark, Burp Suite, Metasploit, Aircrack-ng, Hashcat, Cisco Packet Tracer, Huawei Firewalls.
+- Professional Certifications (13 Verified Credentials):
+  • Penetration Testing & Application Security (NTI / EG-CERT / NTRA - 2026)
+  • BGP Security (RIPE NCC Academy - Sep 2026)
+  • Network Security (Huawei ICT Academy - Sep 2026)
+  • Certified Cybersecurity Educator Professional (CCEP - Red Team Leaders)
+  • Certified LLM Security Professional (CLLMSP - Red Team Leaders)
+  • Gemini Certified Student (Google for Education - Aug 2026)
+  • CCNA: ENSA & CCNA: SRWE (Cisco Networking Academy)
+  • HCIA-Security V4.0 & HCIA-AI (Huawei ICT Academy)
+  • CS50's Introduction to Cybersecurity (HarvardX)
+  • Endpoint Security (Cisco Networking Academy)
+  • ITI Front-End Web Development (120 Hours)
 - Key Projects:
-  1. YA CV AI: Full-stack AI Resume & ATS Builder using React, Node.js, and Gemini API.
-  2. NØURGINE World: AI Bio Links & Creator Platform for links and dynamic analytics.
-  3. Wi-Fi Penetration Testing: Kali Linux security audit, WPA/WPA2 handshakes assessment.
-  4. Android Vulnerability Assessment Lab: Mobile security audit using APKTool, MobSF, and Dex2Jar.
-  5. Interactive 3D/Modern Portfolio: Built with React, Tailwind CSS, Framer Motion, and OpenRouter AI integration.
-- Business Experience: Self-employed E-Commerce Store Owner & Operations Lead (2018–2023).
+  1. Sakina AI (سكينة): Evidence-grounded mental wellness assistant using RAG, trusted-source citations, safety classification, crisis handling, and bilingual Arabic/English interaction.
+  2. Nabta AI (نبتة) (https://nabta-ai-eg.vercel.app): Grounded GenAI study workspace transforming PDFs and notes into source-backed explanations, study guides, quizzes, mastery tracking, Voice Tutor, and AI Viva.
+  3. NOR AI (نور) (https://nor-ai-azure.vercel.app): Voice-first visual assistant for blind and visually impaired users using multimodal AI for real-time scene understanding, OCR, currency recognition, and spoken interaction.
+  4. YA CV AI: Full-stack AI Resume & ATS Builder using React, Node.js, and Gemini API.
+  5. NØURGINE World: AI Bio Links & Creator Platform for links and dynamic analytics.
+  6. Metasploitable 2 PenTest: 20-page comprehensive report by Pharaohs Security Team (12 high-impact vulnerabilities, CVSS 10.0, root compromise).
+  7. Wi-Fi Penetration Testing: Kali Linux security audit, WPA/WPA2 handshakes assessment.
+  8. Android Security Testing Lab: Mobile security audit using Metasploit, Meterpreter, and Genymotion.
+- Work Experience:
+  • Independent AI & Cybersecurity Project Developer (2026 - Present)
+  • Generative AI - CIB Summer Internship Program (July 2026)
+  • E-Commerce Store Owner (2018 - 2023)
 
 Guidelines:
 - Keep responses friendly, clean, well-formatted, and markdown-styled.
@@ -46,8 +59,8 @@ export const AiChatWidget: React.FC = () => {
 
   const quickQuestions = [
     'مين يحيى وأيه خبرته؟',
+    'ما تفاصيل تقرير مشروع ميتاسبلويت 2؟',
     'What cybersecurity skills does Yehia have?',
-    'أنا محتاج وسيلة تواصل مباشر مع يحيى',
   ];
 
   const handleSend = async (textToSend?: string) => {

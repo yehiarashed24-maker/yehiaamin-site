@@ -116,11 +116,11 @@ export const CvSection: React.FC<CvSectionProps> = ({ onOpenModal }) => {
                 Yehia Mohamed Hassan Amin
               </h3>
               <p className="text-xs text-[#B600A8] font-bold uppercase tracking-wider mt-0.5">
-                Junior Cybersecurity Specialist
+                Junior Cybersecurity Specialist &bull; AI Developer
               </p>
 
               <p className="text-xs text-[#D7E2EA]/80 font-light mt-3 leading-relaxed line-clamp-4">
-                Cybersecurity Engineer with strong expertise in network security, vulnerability assessment, web application security, and cloud fundamentals. Certified by Cisco, Huawei, HarvardX, and ITI.
+                Offensive security specialist with hands-on labs in penetration testing, network security, and firewalls. Builds secure GenAI applications using RAG, Gemini API, LangChain, ChromaDB, FastAPI, and Node.js.
               </p>
 
               <div className="mt-4 pt-3 border-t border-[#2B2E36] flex flex-wrap gap-3 text-[11px] text-[#D7E2EA]/60 font-mono">
@@ -163,12 +163,14 @@ export const CvSection: React.FC<CvSectionProps> = ({ onOpenModal }) => {
                 </div>
 
                 <div className="pt-2 border-t border-[#2B2E36] space-y-1.5">
-                  <span className="text-[11px] font-mono text-gray-400 uppercase tracking-wider font-bold">Verified Certifications:</span>
+                  <span className="text-[11px] font-mono text-gray-400 uppercase tracking-wider font-bold">13 Verified Certifications:</span>
                   <div className="grid grid-cols-2 gap-1.5 text-[11px] font-mono text-[#D7E2EA]/80">
-                    <span className="flex items-center gap-1"><CheckCircle2 size={11} className="text-emerald-400" /> Cisco Academy</span>
-                    <span className="flex items-center gap-1"><CheckCircle2 size={11} className="text-emerald-400" /> Huawei ICT</span>
-                    <span className="flex items-center gap-1"><CheckCircle2 size={11} className="text-emerald-400" /> HarvardX</span>
-                    <span className="flex items-center gap-1"><CheckCircle2 size={11} className="text-emerald-400" /> ITI Certified</span>
+                    <span className="flex items-center gap-1 truncate"><CheckCircle2 size={11} className="text-emerald-400 shrink-0" /> NTI / EG-CERT</span>
+                    <span className="flex items-center gap-1 truncate"><CheckCircle2 size={11} className="text-emerald-400 shrink-0" /> RIPE NCC BGP</span>
+                    <span className="flex items-center gap-1 truncate"><CheckCircle2 size={11} className="text-emerald-400 shrink-0" /> Red Team Leaders</span>
+                    <span className="flex items-center gap-1 truncate"><CheckCircle2 size={11} className="text-emerald-400 shrink-0" /> Google Gemini</span>
+                    <span className="flex items-center gap-1 truncate"><CheckCircle2 size={11} className="text-emerald-400 shrink-0" /> Cisco CCNA</span>
+                    <span className="flex items-center gap-1 truncate"><CheckCircle2 size={11} className="text-emerald-400 shrink-0" /> Huawei HCIA</span>
                   </div>
                 </div>
               </div>
@@ -193,14 +195,14 @@ export const CvSection: React.FC<CvSectionProps> = ({ onOpenModal }) => {
                 <div>
                   <span className="text-xs font-bold text-white block mb-1">Security &amp; Testing Tools:</span>
                   <p className="text-xs font-mono text-gray-400 leading-relaxed">
-                    Nmap, Wireshark, Burp Suite, Metasploit, Aircrack-ng, Wifite, Hashcat, Bettercap
+                    Kali Linux, Nmap, Wireshark, Burp Suite, Metasploit, Aircrack-ng, Wifite, Hashcat, Bettercap
                   </p>
                 </div>
 
                 <div className="pt-2 border-t border-[#2B2E36]">
-                  <span className="text-xs font-bold text-white block mb-1">Engineering Stack:</span>
+                  <span className="text-xs font-bold text-white block mb-1">AI &amp; Engineering Stack:</span>
                   <p className="text-xs font-mono text-gray-400 leading-relaxed">
-                    Python, JavaScript, React, Node.js, Kali Linux, Cisco Packet Tracer, AWS
+                    RAG, Gemini API, LangChain, ChromaDB, FastAPI, Node.js, Python, React, AWS
                   </p>
                 </div>
               </div>
@@ -221,19 +223,32 @@ export const CvSection: React.FC<CvSectionProps> = ({ onOpenModal }) => {
                 <Briefcase size={16} className="text-[#7721B1]" />
               </div>
 
-              <div className="space-y-2">
-                <div className="flex justify-between items-baseline">
-                  <h4 className="text-sm font-bold text-white group-hover:text-[#00E1FF] transition-colors">
-                    E-Commerce Store Owner
-                  </h4>
-                  <span className="text-[11px] font-mono text-gray-400">2018 - 2023</span>
+              <div className="space-y-2.5">
+                <div>
+                  <div className="flex justify-between items-baseline">
+                    <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-[#00E1FF] transition-colors">
+                      Independent AI &amp; Cyber Developer
+                    </h4>
+                    <span className="text-[10px] font-mono text-[#00E1FF]">2026 - Present</span>
+                  </div>
+                  <p className="text-[11px] text-[#D7E2EA]/75 font-light">
+                    Built practical VAPT labs, RAG mental wellness &amp; study platforms, and secure LLM flows.
+                  </p>
                 </div>
-                <p className="text-xs text-[#B600A8] font-mono">Self-Employed / Online Fashion Brand</p>
 
-                <ul className="text-xs text-[#D7E2EA]/75 font-light space-y-1 pt-1 list-disc list-inside">
-                  <li>Managed full operations, sourcing, inventory, and digital marketing.</li>
-                  <li>Boosted sales conversion rates by 15% using data analytics.</li>
-                </ul>
+                <div className="pt-1.5 border-t border-[#2B2E36]/60">
+                  <div className="flex justify-between items-baseline">
+                    <h4 className="text-xs sm:text-sm font-bold text-white">Generative AI Intern &ndash; CIB</h4>
+                    <span className="text-[10px] font-mono text-[#B600A8]">July 2026</span>
+                  </div>
+                </div>
+
+                <div className="pt-1.5 border-t border-[#2B2E36]/60">
+                  <div className="flex justify-between items-baseline">
+                    <h4 className="text-xs sm:text-sm font-bold text-white">E-Commerce Store Owner</h4>
+                    <span className="text-[10px] font-mono text-gray-400">2018 - 2023</span>
+                  </div>
+                </div>
               </div>
             </motion.div>
 

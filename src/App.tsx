@@ -7,6 +7,7 @@ import { CertificatesSection } from './sections/CertificatesSection';
 import { CvSection } from './sections/CvSection';
 import { ContactModal } from './components/ContactModal';
 import { CvModal } from './components/CvModal';
+import { MetasploitReportModal } from './components/MetasploitReportModal';
 import { AiChatWidget } from './components/AiChatWidget';
 import { ContactButton } from './components/ContactButton';
 import { CustomCursor } from './components/CustomCursor';
@@ -34,6 +35,7 @@ const LinkedinIcon = ({ size = 22, className = "" }: { size?: number; className?
 export function App() {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isCvOpen, setIsCvOpen] = useState(false);
+  const [isMetasploitOpen, setIsMetasploitOpen] = useState(false);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -55,7 +57,7 @@ export function App() {
         <SkillsSection />
 
         {/* 4. Projects Section */}
-        <ProjectsSection />
+        <ProjectsSection onOpenMetasploitReport={() => setIsMetasploitOpen(true)} />
 
         {/* 5. Certificates Section */}
         <CertificatesSection />
@@ -129,6 +131,7 @@ export function App() {
       {/* Modals & Floating AI Widget */}
       <ContactModal isOpen={isContactOpen} onClose={() => setIsContactOpen(false)} />
       <CvModal isOpen={isCvOpen} onClose={() => setIsCvOpen(false)} />
+      <MetasploitReportModal isOpen={isMetasploitOpen} onClose={() => setIsMetasploitOpen(false)} />
       <AiChatWidget />
     </div>
   );

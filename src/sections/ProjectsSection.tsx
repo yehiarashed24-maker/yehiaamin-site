@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { FadeIn } from '../components/FadeIn';
-import { ExternalLink, FileText, ArrowUpRight } from 'lucide-react';
+import { ExternalLink, FileText, ArrowUpRight, ShieldAlert } from 'lucide-react';
 import { TextReveal } from '../components/TextReveal';
 
 interface ProjectData {
@@ -13,6 +13,7 @@ interface ProjectData {
   link: string;
   buttonLabel: string;
   isPdf?: boolean;
+  isOpenModal?: boolean;
   image: string;
 }
 
@@ -68,11 +69,12 @@ const projects: ProjectData[] = [
     category: '(NETWORK VAPT LAB)',
     title: 'Metasploitable 2 Penetration Testing Report',
     description:
-      'Internal network penetration testing against target 192.168.100.181 (Metasploitable 2). Identified and exploited 5 Critical-severity vulnerabilities (vsftpd 2.3.4 backdoor, Samba usermap_script RCE, Apache Tomcat default credentials, UnrealIRCD 3.2.8.1 backdoor, DistCC daemon RCE) to gain root/system access.',
-    tech: ['Kali Linux', 'Metasploit', 'Nmap', 'Root Exploitation', 'VAPT Report'],
+      'Internal network penetration testing against target 192.168.100.181 (Metasploitable 2) conducted by Pharaohs Security Team. Uncovered and validated 12 high-impact vulnerabilities (10 Critical, 2 High) including vsftpd 2.3.4 backdoor, Samba usermap script RCE, UnrealIRCd, DistCC, Tomcat Manager, Java RMI, Bind Shell, and NFS root export.',
+    tech: ['Kali Linux', 'Metasploit', 'Nmap', 'CVSS 10.0', '12 Findings', 'Pharaohs Team'],
     link: '/assets/docs/professional.pdf',
-    buttonLabel: 'View Report PDF',
+    buttonLabel: 'Explore Full Report',
     isPdf: true,
+    isOpenModal: true,
     image: '/assets/images/metasploitable-project.png',
   },
   {
@@ -87,17 +89,56 @@ const projects: ProjectData[] = [
     isPdf: true,
     image: '/assets/images/android-project.png',
   },
+  {
+    number: '07',
+    category: '(HEALTHCARE AI & RAG)',
+    title: 'Sakina AI – Mental Wellness Assistant',
+    description:
+      'Evidence-grounded mental wellness assistant using RAG, trusted-source citations, safety classification, crisis handling, and bilingual Arabic/English interaction. Designed with end-to-end security controls for inputs, APIs, secrets, and AI workflows.',
+    tech: ['RAG', 'LangChain', 'ChromaDB', 'Gemini API', 'Bilingual AI', 'Crisis Safety'],
+    link: 'https://drive.google.com/drive/u/0/folders/1ehV2zKH38_5BdXAjiDMmzIDPHK5Li08M',
+    buttonLabel: 'Explore Project Drive',
+    image: '/assets/images/sakina-project.png',
+  },
+  {
+    number: '08',
+    category: '(EDTECH & MULTIMODAL GENAI)',
+    title: 'Nabta AI – Smart Study Workspace',
+    description:
+      'Grounded GenAI study workspace that turns PDFs and notes into source-backed explanations, study guides, quizzes, mastery tracking, Voice Tutor, and AI Viva. Designed with end-to-end security controls for uploaded content, retrieval, APIs, and AI interactions.',
+    tech: ['Next.js / React', 'Gemini API', 'RAG Workspace', 'Voice Tutor', 'AI Viva'],
+    link: 'https://nabta-ai-eg.vercel.app',
+    buttonLabel: 'Visit Live App',
+    image: '/assets/images/nabta-project.png',
+  },
+  {
+    number: '09',
+    category: '(ACCESSIBILITY & VISION AI)',
+    title: 'NOR AI – Voice-First Visual Assistant',
+    description:
+      'Voice-first visual assistant for blind and visually impaired users using multimodal AI for scene understanding, OCR, currency/product assistance, color recognition, and spoken Arabic/English interaction. Designed with end-to-end security and privacy controls for camera data, APIs, and user interactions.',
+    tech: ['Multimodal AI', 'Computer Vision', 'Voice Assistant', 'OCR Engine', 'Privacy Controls'],
+    link: 'https://nor-ai-azure.vercel.app',
+    buttonLabel: 'Visit Live App',
+    image: '/assets/images/nor-project.png',
+  },
 ];
+
+interface ProjectsSectionProps {
+  onOpenMetasploitReport?: () => void;
+}
 
 interface CardProps {
   project: ProjectData;
   index: number;
   totalCards: number;
+  onOpenMetasploit?: () => void;
 }
 
-const ProjectCard: React.FC<CardProps> = ({ project, index, totalCards }) => {
+const ProjectCard: React.FC<CardProps> = ({ project, index, totalCards, onOpenMetasploit }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const isMetasploit = project.number === '05';
 
   const targetScale = 1 - (totalCards - 1 - index) * 0.025;
 
@@ -211,34 +252,72 @@ const ProjectCard: React.FC<CardProps> = ({ project, index, totalCards }) => {
 
           {/* Action Link Button */}
           <div className="self-start lg:self-center flex-shrink-0 mt-2 lg:mt-0">
-            <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#D7E2EA] text-[#0C0C0C] font-bold uppercase text-xs sm:text-sm tracking-wider transition-all duration-300 hover:bg-[#B600A8] hover:text-white hover:scale-105 active:scale-95 shadow-lg group/btn"
-            >
-              {project.isPdf ? <FileText size={16} /> : <ExternalLink size={16} />}
-              <span>{project.buttonLabel}</span>
-              <ArrowUpRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-            </a>
+            {isMetasploit && onOpenMetasploit ? (
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={onOpenMetasploit}
+                  className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#B600A8] text-white font-bold uppercase text-xs sm:text-sm tracking-wider transition-all duration-300 hover:bg-[#96008b] hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(182,0,168,0.4)] group/btn cursor-pointer"
+                >
+                  <ShieldAlert size={16} />
+                  <span>Explore Full Report</span>
+                  <ArrowUpRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                </button>
+                <a
+                  href={project.link}
+                  download="Metasploitable_2_Penetration_Test_Report_Pharaohs.pdf"
+                  className="inline-flex items-center gap-1.5 px-4 py-3 rounded-full border border-[#D7E2EA]/30 bg-[#141518] text-[#D7E2EA] font-semibold uppercase text-xs tracking-wider transition-all duration-300 hover:border-[#00E1FF] hover:text-[#00E1FF] hover:scale-105 active:scale-95 shadow-md"
+                  title="Download Official 20-Page PDF"
+                >
+                  <FileText size={15} />
+                  <span>PDF (20P)</span>
+                </a>
+              </div>
+            ) : (
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#D7E2EA] text-[#0C0C0C] font-bold uppercase text-xs sm:text-sm tracking-wider transition-all duration-300 hover:bg-[#B600A8] hover:text-white hover:scale-105 active:scale-95 shadow-lg group/btn"
+              >
+                {project.isPdf ? <FileText size={16} /> : <ExternalLink size={16} />}
+                <span>{project.buttonLabel}</span>
+                <ArrowUpRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+              </a>
+            )}
           </div>
         </div>
 
         {/* Single Main Showcase Image */}
-        <div className="w-full h-[260px] sm:h-[380px] md:h-[480px] overflow-hidden rounded-[26px] sm:rounded-[36px] border border-[#D7E2EA]/10 bg-[#141518] relative z-10">
+        <div
+          onClick={() => {
+            if (isMetasploit && onOpenMetasploit) onOpenMetasploit();
+          }}
+          className={`w-full h-[260px] sm:h-[380px] md:h-[480px] overflow-hidden rounded-[26px] sm:rounded-[36px] border border-[#D7E2EA]/10 bg-[#141518] relative z-10 ${
+            isMetasploit ? 'cursor-pointer group/img' : ''
+          }`}
+        >
           <img
             src={project.image}
             alt={`${project.title} showcase`}
             loading="lazy"
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
+          {isMetasploit && (
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+              <span className="px-5 py-2.5 rounded-full bg-black/75 backdrop-blur-md border border-[#B600A8] text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-2xl">
+                <ShieldAlert size={16} className="text-[#B600A8]" />
+                Click to Open Interactive Report
+              </span>
+            </div>
+          )}
         </div>
       </motion.div>
     </div>
   );
 };
 
-export const ProjectsSection: React.FC = () => {
+export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ onOpenMetasploitReport }) => {
   return (
     <section
       id="projects"
@@ -267,6 +346,7 @@ export const ProjectsSection: React.FC = () => {
             project={project}
             index={index}
             totalCards={projects.length}
+            onOpenMetasploit={onOpenMetasploitReport}
           />
         ))}
       </div>
